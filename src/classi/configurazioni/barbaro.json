@@ -1,0 +1,26 @@
+{
+  "nome": "Barbaro",
+  "hp_dado": 12,
+
+  "competence_armi": ["SPADA_LUNGA", "ASCE", "MARTELLO", "ARCO_CORTO"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "tiri_salvezza": ["forza", "costituzione"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "INTUIZIONE",
+      "PERCEZIONE",
+      "FURTIVITA",
+      "MEDICINA",
+      "NATURA",
+      "SOPRAVVIVENZA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["rage", "difesa_senza_armatura"],
+    "2": ["attacco_spericolato"],
+    "5": ["attacco_extra"]
+  }
+}
