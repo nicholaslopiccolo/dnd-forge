@@ -4,7 +4,7 @@
 
   "competence_armi": ["SPADA_LUNGA", "ASCE", "MARTELLO", "ARCO_CORTO"],
   "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
-  "tiri_salvezza": ["forza", "costituzione"],
+  "tiri_salvezza": ["FORZA", "COSTITUZIONE"],
 
   "skills_choices": {
     "numero": 2,

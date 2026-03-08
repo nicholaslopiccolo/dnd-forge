@@ -18,9 +18,6 @@ class Attributo:
             return self.modificatore + bonus_competenza
         return self.modificatore
     
-    def set(self, value):
-        self.valore = value
-
     def __str__(self) -> str:
         ts_flag = " ✓" if self.ts else ""
         return f"{self.nome[:3].upper()}: {self.valore} ({self.modificatore:+}){ts_flag}"
@@ -79,7 +76,7 @@ class Personaggio:
         self.attributi = default_attr
 
         # inizializza la classe
-        self.classi[self.classe_iniziale] = Classe(nome=self.classe_iniziale)
+        self.classi[self.classe_iniziale] = Classe.from_config(self.classe_iniziale)
 
         # livello 1 iniziale
         self.level_up(classe=self.classe_iniziale)
@@ -123,17 +120,13 @@ class Personaggio:
         self.classi[classe].level_up(self)
         if self.livello > 1:
             print(f"Hai raggiunto il livello {self.livello}!")
-        else:
-            # Se il primo livello allora devo modificare gli attributi e segnare i tisi salvezza
-            print("cosa", classe)
-            print(self.classi[classe].tiri_salvezza)
-            for abilita in self.classi[classe].tiri_salvezza:
-                print(abilita)
-                self.attributi[abilita].ts = True
+
+    def aggiungi_feature(self, feature: str) -> None:
+        # TODO: implementare il sistema di privilegi/feature
+        pass
 
 
         # TODO: logiche level up (aumento punti vita, miglioramento attributi, ecc.)
-        # Override in classe
 
     def __str__(self) -> str:
         classi = " - ".join(str(classe) for classe in self.classi.values())
@@ -141,9 +134,3 @@ class Personaggio:
         abilita = "\n".join(str(abilita) for abilita in self.abilita)
 
         return f"Livello: {self.livello}\nClasse: {classi}\nExp: {self.exp}\n\nBonus competenza: +{self.bonus_competenza}\n{attributi}\n\n{abilita}"
-
-p = Personaggio("Thorvin", ClassiEnum.BARBARO, attributi={AttributoEnum.DESTREZZA: 16})
-
-print(p)
-
-# TODO sviluppare funzione di UNDO
