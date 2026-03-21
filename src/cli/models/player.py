@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List, Dict, Set
-from constants import EXP_LIVELLI, AbilitaEnum, AttributoEnum, ClassiEnum
-from classi.base import Classe
+from .constants import EXP_LIVELLI, AbilitaEnum, AttributoEnum, ClassiEnum
+from .classi.base import Classe
 
 @dataclass
 class Attributo:
@@ -19,8 +19,11 @@ class Attributo:
         return self.modificatore
     
     def __str__(self) -> str:
+        return f"{self.nome[:3].upper()} {self.valore} ({self.modificatore:+})"
+    
+"""     def __str__(self) -> str:
         ts_flag = " ✓" if self.ts else ""
-        return f"{self.nome[:3].upper()}: {self.valore} ({self.modificatore:+}){ts_flag}"
+        return f"{self.nome[:3].upper()}: {self.valore} ({self.modificatore:+}){ts_flag}" """
     
 
 
@@ -33,10 +36,13 @@ class Abilita:
     def bonus(self, bonus_competenza: int) -> int:
         """Calcola il bonus dell'abilità"""
         return self.attributo.modificatore + (bonus_competenza if self.competente else 0)
-
+    
     def __str__(self) -> str:
+        return f"{self.nome.label} ({self.attributo.nome[:3].upper()})"
+
+"""     def __str__(self) -> str:
         comp_flag = " ✓" if self.competente else ""
-        return f"{self.nome}: {self.bonus(self.attributo.modificatore)}{comp_flag}"
+        return f"{self.nome}: {self.bonus(self.attributo.modificatore)}{comp_flag}" """
 
 
 @dataclass
@@ -127,10 +133,12 @@ class Personaggio:
 
 
         # TODO: logiche level up (aumento punti vita, miglioramento attributi, ecc.)
-
     def __str__(self) -> str:
+        return f"{self.nome} — Liv.{self.livello} {self.classe_iniziale.value}"
+
+"""     def __str__(self) -> str:
         classi = " - ".join(str(classe) for classe in self.classi.values())
         attributi = "\n".join(str(attributo) for attributo in self.attributi.values())
         abilita = "\n".join(str(abilita) for abilita in self.abilita)
 
-        return f"Livello: {self.livello}\nClasse: {classi}\nExp: {self.exp}\n\nBonus competenza: +{self.bonus_competenza}\n{attributi}\n\n{abilita}"
+        return f"Livello: {self.livello}\nClasse: {classi}\nExp: {self.exp}\n\nBonus competenza: +{self.bonus_competenza}\n{attributi}\n\n{abilita}" """

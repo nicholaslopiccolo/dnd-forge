@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from constants import ClassiEnum, AttributoEnum, AbilitaEnum
+from ..constants import ClassiEnum, AttributoEnum, AbilitaEnum
 
 import json
 import os
