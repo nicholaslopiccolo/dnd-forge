@@ -2,14 +2,15 @@ from dataclasses import dataclass, field
 from ..constants import ClassiEnum, AttributoEnum, AbilitaEnum
 
 import json
-import os
+from pathlib import Path
 
 
 @dataclass
 class Classe:
     nome: ClassiEnum
     livello: int = 0
-    
+    hp_dado: int = 0
+
     # Armi e armature
     competence_armi: set[str] = field(default_factory=set)
     competence_armature: set[str] = field(default_factory=set)
@@ -30,14 +31,21 @@ class Classe:
     @classmethod
     def from_config(cls, nome: ClassiEnum) -> 'Classe':
         """Carica la classe dalla configurazione JSON se disponibile."""
-        config_dir = os.path.join(os.path.dirname(__file__), "configurazioni")
-        file_path = os.path.join(config_dir, f"{nome.value.lower()}.json")
-        if os.path.exists(file_path):
+        file_path = Path(__file__).parent / "configurazioni" / f"{nome.value.lower()}.json"
+        if file_path.exists():
             return carica_classe(file_path)
         return cls(nome=nome)
 
     def level_up(self, personaggio) -> None:
         self.livello += 1
+
+        # Calcola e aggiunge HP
+        con_mod = personaggio.attributi[AttributoEnum.COSTITUZIONE].modificatore
+        if self.livello == 1:
+            hp_gain = self.hp_dado + con_mod  # massimo al primo livello
+        else:
+            hp_gain = self.hp_dado // 2 + 1 + con_mod  # media livelli successivi
+        personaggio.hp += max(1, hp_gain)
 
         # Applica privilegi del livello
         for feat in self.privilegi.get(self.livello, []):
@@ -78,6 +86,7 @@ def carica_classe(file_path: str) -> 'Classe':
 
     return Classe(
         nome=ClassiEnum(dati["nome"]),
+        hp_dado=dati.get("hp_dado", 0),
         competence_armi=set(dati.get("competence_armi", [])),
         competence_armature=set(dati.get("competence_armature", [])),
         tiri_salvezza={AttributoEnum[t] for t in dati.get("tiri_salvezza", [])},

@@ -1,0 +1,8 @@
+{
+  "servers": {
+    "drawio-mcp": {
+      "command": "uvx",
+      "args": ["drawio-mcp"]
+    }
+  }
+}

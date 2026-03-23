@@ -1,0 +1,117 @@
+{
+  "id": 3,
+  "nome": "Pulce",
+  "classe_iniziale": "BARBARO",
+  "razza": "GNOMO",
+  "livello": 15,
+  "exp": 300,
+  "hp": 80,
+  "attributi": {
+    "FORZA": {
+      "valore": 16,
+      "ts": true
+    },
+    "DESTREZZA": {
+      "valore": 14,
+      "ts": false
+    },
+    "COSTITUZIONE": {
+      "valore": 16,
+      "ts": true
+    },
+    "INTELLIGENZA": {
+      "valore": 12,
+      "ts": false
+    },
+    "SAGGEZZA": {
+      "valore": 10,
+      "ts": false
+    },
+    "CARISMA": {
+      "valore": 10,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "ADDESTRARE_ANIMALI",
+    "ACROBAZIA"
+  ],
+  "armi": [
+    "MARTELLO",
+    "SPADA_LUNGA",
+    "ARCO_CORTO",
+    "ASCE"
+  ],
+  "armature": [
+    "SCUDO",
+    "ARMATURA_LEGGERA",
+    "ARMATURA_MEDIA"
+  ],
+  "tiri_salvezza": [],
+  "classi": {
+    "BARBARO": {
+      "livello": 4,
+      "hp_dado": 12,
+      "competence_armi": [
+        "MARTELLO",
+        "SPADA_LUNGA",
+        "ARCO_CORTO",
+        "ASCE"
+      ],
+      "competence_armature": [
+        "SCUDO",
+        "ARMATURA_LEGGERA",
+        "ARMATURA_MEDIA"
+      ],
+      "tiri_salvezza": [
+        "FORZA",
+        "COSTITUZIONE"
+      ],
+      "privilegi": {
+        "1": [
+          "rage",
+          "difesa_senza_armatura"
+        ],
+        "2": [
+          "attacco_spericolato"
+        ],
+        "5": [
+          "attacco_extra"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "FURTIVITA",
+        "PERCEZIONE",
+        "NATURA",
+        "INTUIZIONE",
+        "SOPRAVVIVENZA",
+        "MEDICINA"
+      ],
+      "competenze_base": []
+    },
+    "MAGO": {
+      "livello": 2,
+      "hp_dado": 0,
+      "competence_armi": [],
+      "competence_armature": [],
+      "tiri_salvezza": [],
+      "privilegi": {},
+      "skills_choices_num": 0,
+      "skills_choices_opzioni": [],
+      "competenze_base": []
+    },
+    "WARLOCK": {
+      "livello": 9,
+      "hp_dado": 0,
+      "competence_armi": [],
+      "competence_armature": [],
+      "tiri_salvezza": [],
+      "privilegi": {},
+      "skills_choices_num": 0,
+      "skills_choices_opzioni": [],
+      "competenze_base": []
+    }
+  },
+  "descrizione": "Io sono Pulce, un gnomo minuto ma temprato come la roccia delle colline natie, con muscoli tesi sotto la pelle coriacea e un ghigno perenne che tradisce la mia fame di lotta. La mia forza è un tuono in miniatura: con un'ascia bipenne in pugno, mi scaglio contro i nemici come una valanga, la rabbia che mi infiamma le vene e mi rende invincibile, ignorando ferite che abbatterebbero giganti. Amo picchiare, oh sì, sentire le ossa spezzarsi sotto i miei colpi furiosi, il sangue che schizza mentre urlo sfide al mondo, protetto da una vitalità ferrea che mi tiene in piedi anche quando il dolore dovrebbe reclamarmi.\n\nEppure, nel profondo del mio animo irrequieto, brilla l'amore per la magia, quel sussurro arcano che piega la realtà alle mie dita piccole e callose. Con un gesto e una parola, invoco fiamme danzanti o illusioni ingannevoli, intrecciando incantesimi ai miei assalti brutali. Non sono un sapiente curvo sui tomi: la mia mente vivace salta da un'idea all'altra, agile come me quando schivo frecce o addestro bestie selvagge con un fischio. Acrobata tra le ombre, balzo e roteo in battaglia, un turbine di furia primordiale e scintille eteree. I deboli temono la mia ira, i saggi invidiano il mio potere ibrido – io, Pulce, sono il caos incarnato, un gnomo che ride della morte mentre la magia e il pugno la sfidano insieme."
+}

@@ -33,7 +33,7 @@ class AttributoEnum(Enum):
 
 class AbilitaEnum(Enum):
     ACROBAZIA = ("Acrobazia", AttributoEnum.DESTREZZA)
-    ADDOMESTICARE_ANIMALI = ("Addomesticare Animali", AttributoEnum.SAGGEZZA)
+    ADDESTRARE_ANIMALI = ("Addestrare Animali", AttributoEnum.SAGGEZZA)
     ARCANO = ("Arcano", AttributoEnum.INTELLIGENZA)
     ATLETICA = ("Atletica", AttributoEnum.FORZA)
     FURTIVITA = ("Furtività", AttributoEnum.DESTREZZA)
@@ -72,3 +72,15 @@ class ClassiEnum(Enum):
     MAGO = "Mago"
     STREGONE = "Stregone"
     WARLOCK = "Warlock"
+
+
+class RazzaEnum(Enum):
+    UMANO = "Umano"
+    ELFO = "Elfo"
+    NANO = "Nano"
+    HALFLING = "Halfling"
+    GNOMO = "Gnomo"
+    MEZZORCO = "Mezzorco"
+    TIEFLING = "Tiefling"
+    DRAGONIDE = "Dragonide"
+    MEZZELFO = "Mezzelfo"

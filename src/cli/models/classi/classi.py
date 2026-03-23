@@ -1,4 +1,5 @@
-from classi.base import carica_classe
-import os
+from pathlib import Path
 
-Barbaro = carica_classe(os.path.join(os.path.dirname(__file__), "configurazioni", "barbaro.json"))
+from .base import carica_classe
+
+Barbaro = carica_classe(Path(__file__).parent / "configurazioni" / "barbaro.json")

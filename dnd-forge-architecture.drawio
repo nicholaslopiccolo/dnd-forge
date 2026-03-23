@@ -1,0 +1,156 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="drawio-mcp" modified="2026-03-09T09:39:20.000Z" agent="drawio-mcp/1.0" version="24.7.17" type="device" compressed="false">
+  <diagram name="dnd-forge-architecture" id="167ed535a323">
+    <mxGraphModel dx="1354" dy="981" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="0" pageScale="1" pageWidth="827" pageHeight="1169" background="#f5f5f5" math="0" shadow="0">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        <mxCell id="2" value="DnD-Forge — Program Architecture" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=20;fontStyle=1;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="50" y="10" width="400" height="30" />
+        </mxCell>
+        <mxCell id="3" value="Module structure, entities, and dependencies" style="text;html=1;align=center;verticalAlign=middle;resizable=0;points=[];autosize=1;strokeColor=none;fillColor=none;fontSize=14;fontColor=#666666;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="50" y="42" width="400" height="20" />
+        </mxCell>
+        <mxCell id="4" value="main.py  ·  entry point" style="swimlane;startSize=30;fillColor=#dae8fc;strokeColor=#6c8ebf;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="610" y="90" width="260.0" height="80.0" />
+        </mxCell>
+        <mxCell id="5" value="constants.py  ·  enums &amp; tables" style="swimlane;startSize=30;fillColor=#fff2cc;strokeColor=#d6b656;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="30" y="260" width="290.0" height="340.0" />
+        </mxCell>
+        <mxCell id="6" value="player.py  ·  character entities" style="swimlane;startSize=30;fillColor=#d5e8d4;strokeColor=#82b366;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="380" y="260" width="320.0" height="400.0" />
+        </mxCell>
+        <mxCell id="7" value="classi/  ·  class definitions" style="swimlane;startSize=30;fillColor=#f8cecc;strokeColor=#b85450;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="760" y="260" width="560.0" height="400.0" />
+        </mxCell>
+        <mxCell id="8" value="utils/dadi.py  ·  dice utilities" style="swimlane;startSize=30;fillColor=#e1d5e7;strokeColor=#9673a6;fontStyle=1;fontSize=12;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="30" y="690" width="230.0" height="120.0" />
+        </mxCell>
+        <mxCell id="9" value="Creates Personaggio('Thorvin', BARBARO)&#10;Prints character sheet" style="rounded=1;fillColor=#dae8fc;strokeColor=#6c8ebf;fontSize=10;align=center;" parent="4" vertex="1">
+          <mxGeometry as="geometry" x="-590.0" y="-50.0" width="225" height="35" />
+        </mxCell>
+        <mxCell id="10" value="AttributoEnum&#10;FORZA · DESTREZZA · COSTITUZIONE&#10;INTELLIGENZA · SAGGEZZA · CARISMA" style="rounded=1;fillColor=#fffacd;strokeColor=#d6b656;fontSize=10;align=left;spacingLeft=6;" parent="5" vertex="1">
+          <mxGeometry as="geometry" x="-10.0" y="-220.0" width="255" height="55" />
+        </mxCell>
+        <mxCell id="11" value="AbilitaEnum&#10;18 skills → each linked to an AttributoEnum&#10;(ACROBAZIA, ATLETICA, ARCANO…)" style="rounded=1;fillColor=#fffacd;strokeColor=#d6b656;fontSize=10;align=left;spacingLeft=6;" parent="5" vertex="1">
+          <mxGeometry as="geometry" x="-10.0" y="-150.0" width="255" height="55" />
+        </mxCell>
+        <mxCell id="12" value="ClassiEnum&#10;13 classes: BARBARO, GUERRIERO,&#10;MAGO, PALADINO, LADRO…" style="rounded=1;fillColor=#fffacd;strokeColor=#d6b656;fontSize=10;align=left;spacingLeft=6;" parent="5" vertex="1">
+          <mxGeometry as="geometry" x="-10.0" y="-80.0" width="255" height="55" />
+        </mxCell>
+        <mxCell id="13" value="EXP_LIVELLI : Dict[int, int]&#10;Experience thresholds for levels 1–20" style="rounded=1;fillColor=#fffacd;strokeColor=#d6b656;fontSize=10;align=left;spacingLeft=6;" parent="5" vertex="1">
+          <mxGeometry as="geometry" x="-10.0" y="-10.0" width="255" height="50" />
+        </mxCell>
+        <mxCell id="14" value="« dataclass »  Personaggio&#10;nome: str&#10;classe_iniziale: ClassiEnum&#10;livello: int · exp: int · hp: int&#10;classi: Dict[ClassiEnum, Classe]&#10;attributi: Dict[AttributoEnum, Attributo]&#10;competenze: set[AbilitaEnum]" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacingLeft=6;" parent="6" vertex="1">
+          <mxGeometry as="geometry" x="-360.0" y="-220.0" width="285" height="110" />
+        </mxCell>
+        <mxCell id="15" value="« dataclass »  Attributo&#10;nome: str · valore: int · ts: bool&#10;@ modificatore → (valore−10)//2&#10;tiro_salvezza(bonus_competenza)" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacingLeft=6;" parent="6" vertex="1">
+          <mxGeometry as="geometry" x="-360.0" y="-90.0" width="285" height="70" />
+        </mxCell>
+        <mxCell id="16" value="« dataclass »  Abilita&#10;nome: AbilitaEnum&#10;attributo: Attributo · competente: bool&#10;bonus(bonus_competenza) → int" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacingLeft=6;" parent="6" vertex="1">
+          <mxGeometry as="geometry" x="-360.0" y="0.0" width="285" height="70" />
+        </mxCell>
+        <mxCell id="17" value="@ abilita → List[Abilita]  (18 computed skills)&#10;@ bonus_competenza → 2 + (livello−1)//4" style="rounded=1;fillColor=#d5e8d4;strokeColor=#82b366;fontSize=10;align=left;spacingLeft=6;fontStyle=3;" parent="6" vertex="1">
+          <mxGeometry as="geometry" x="-360.0" y="80.0" width="285" height="50" />
+        </mxCell>
+        <mxCell id="18" value="« dataclass »  Classe  [base.py]&#10;nome: ClassiEnum · livello: int&#10;competence_armi: set[str]&#10;competence_armature: set[str]&#10;tiri_salvezza: set[AttributoEnum]&#10;privilegi: dict[int, list[str]]&#10;skills_choices_num / opzioni" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;spacingLeft=6;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-740.0" y="-220.0" width="245" height="120" />
+        </mxCell>
+        <mxCell id="19" value="« dataclass »  AbilitaDiClasse  [base.py]&#10;nome: str · descrizione: str" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;spacingLeft=6;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-500.0" y="-220.0" width="285" height="55" />
+        </mxCell>
+        <mxCell id="20" value="carica_classe(file_path) → Classe  [base.py]&#10;Parses JSON → builds Classe instance" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;spacingLeft=6;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-500.0" y="-150.0" width="285" height="45" />
+        </mxCell>
+        <mxCell id="21" value="Barbaro  [classi.py]&#10;Module-level Classe loaded from JSON" style="rounded=1;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=left;spacingLeft=6;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-740.0" y="-60.0" width="245" height="45" />
+        </mxCell>
+        <mxCell id="22" value="barbaro.json  [configurazioni/]&#10;hp_dado: 12&#10;competence_armi: [SPADA_LUNGA, ASCE…]&#10;tiri_salvezza: [FORZA, COSTITUZIONE]&#10;privilegi:&#10;  1: rage, difesa_senza_armatura&#10;  2: attacco_spericolato" style="shape=mxgraph.azure.document;fillColor=#fff2cc;strokeColor=#d6b656;fontSize=10;align=left;spacingLeft=6;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-500.0" y="-80.0" width="285" height="110" />
+        </mxCell>
+        <mxCell id="23" value="guerriero.py  (placeholder, empty)" style="ellipse;fillColor=#f8cecc;strokeColor=#b85450;fontSize=10;align=center;fontStyle=2;" parent="7" vertex="1">
+          <mxGeometry as="geometry" x="-740.0" y="70.0" width="245" height="40" />
+        </mxCell>
+        <mxCell id="24" value="d(facce: int) → int&#10;rolls die: random.randint(1, facce)&#10;(not yet used by other modules)" style="rounded=1;fillColor=#e1d5e7;strokeColor=#9673a6;fontSize=10;align=left;spacingLeft=6;" parent="8" vertex="1">
+          <mxGeometry as="geometry" x="-10.0" y="-650.0" width="195" height="60" />
+        </mxCell>
+        <mxCell id="25" value="imports Personaggio" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;dashed=0;endArrow=open;endFill=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="4" target="6">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="26" value="imports enums" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=2;dashed=0;endArrow=open;endFill=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0;entryY=0.15;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="4" target="5">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="740" y="680" />
+              <mxPoint x="180" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="27" value="imports enums&#10;+ EXP_LIVELLI" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;dashed=0;endArrow=open;endFill=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="6" target="5">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="28" value="imports Classe" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=2;dashed=0;endArrow=open;endFill=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="6" target="7">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="29" value="imports enums" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=2;dashed=0;endArrow=open;endFill=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0;entryY=0.85;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="7" target="5">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="720" y="460" />
+              <mxPoint x="720" y="680" />
+              <mxPoint x="180" y="680" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="30" value="has 6 (Dict)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=1.5;dashed=1;endArrow=ERzeroToMany;endFill=0;exitX=0.15;exitY=1.0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="6" edge="1" source="14" target="15">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="0" y="0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="31" value="has 18 (computed)" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=1.5;dashed=1;endArrow=ERzeroToMany;endFill=0;exitX=0.85;exitY=1.0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="6" edge="1" source="14" target="16">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="0" y="0" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="32" value="references" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#82b366;strokeWidth=1.5;dashed=1;endArrow=open;endFill=0;exitX=0.5;exitY=0.0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=1.0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="6" edge="1" source="16" target="15">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="33" value="classi Dict" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#6c8ebf;strokeWidth=1.5;dashed=1;endArrow=ERzeroToMany;endFill=0;exitX=0.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=1.0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="1" edge="1" source="14" target="18">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="34" value="calls" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#b85450;strokeWidth=1.5;dashed=1;endArrow=open;endFill=0;exitX=1.0;exitY=0.5;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.0;entryY=0.5;entryDx=0;entryDy=0;entryPerimeter=0;" parent="7" edge="1" source="21" target="20">
+          <mxGeometry as="geometry" relative="1">
+            <Array as="points">
+              <mxPoint x="0" y="0" />
+              <mxPoint x="560" y="0" />
+              <mxPoint x="560" y="130" />
+            </Array>
+          </mxGeometry>
+        </mxCell>
+        <mxCell id="35" value="reads config" style="edgeStyle=orthogonalEdgeStyle;strokeColor=#d6b656;strokeWidth=1.5;dashed=1;endArrow=open;endFill=0;exitX=0.5;exitY=1.0;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0.5;entryY=0.0;entryDx=0;entryDy=0;entryPerimeter=0;" parent="7" edge="1" source="20" target="22">
+          <mxGeometry as="geometry" relative="1" />
+        </mxCell>
+        <mxCell id="36" value="Module Legend" style="swimlane;fontStyle=1;childLayout=stackLayout;horizontal=1;startSize=26;fillColor=#ffffff;horizontalStack=0;resizeParent=1;resizeParentMax=0;resizeLast=0;collapsible=0;marginBottom=0;strokeColor=#666666;html=1;" parent="1" vertex="1">
+          <mxGeometry as="geometry" x="30.0" y="870.0" width="200" height="156" />
+        </mxCell>
+        <mxCell id="37" value="main.py — entry point" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fillColor=#dae8fc;strokeColor=#6c8ebf;html=1;" parent="36" vertex="1">
+          <mxGeometry as="geometry" x="0" y="26" width="200" height="26" />
+        </mxCell>
+        <mxCell id="38" value="constants.py — enums &amp; tables" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fillColor=#fff2cc;strokeColor=#d6b656;html=1;" parent="36" vertex="1">
+          <mxGeometry as="geometry" x="0" y="52" width="200" height="26" />
+        </mxCell>
+        <mxCell id="39" value="player.py — character entities" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fillColor=#d5e8d4;strokeColor=#82b366;html=1;" parent="36" vertex="1">
+          <mxGeometry as="geometry" x="0" y="78" width="200" height="26" />
+        </mxCell>
+        <mxCell id="40" value="classi/ — class definitions" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fillColor=#f8cecc;strokeColor=#b85450;html=1;" parent="36" vertex="1">
+          <mxGeometry as="geometry" x="0" y="104" width="200" height="26" />
+        </mxCell>
+        <mxCell id="41" value="utils/ — utilities" style="text;align=left;verticalAlign=top;spacingLeft=4;spacingRight=4;overflow=hidden;rotatable=0;points=[[0,0.5],[1,0.5]];portConstraint=eastwest;fillColor=#e1d5e7;strokeColor=#9673a6;html=1;" parent="36" vertex="1">
+          <mxGeometry as="geometry" x="0" y="130" width="200" height="26" />
+        </mxCell>
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

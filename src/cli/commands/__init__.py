@@ -1,13 +1,14 @@
+from collections.abc import Callable
+
 from rich.console import Console
 import sys
-import colorama
 
 console = Console(
     force_terminal=True,
     legacy_windows=False if sys.platform == "win32" else None,
 )
 
-_REGISTRY: dict[str, callable] = {}
+_REGISTRY: dict[str, Callable] = {}
 
 def command(name: str, description: str = ""):
     def decorator(func):

@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from typing import List, Dict, Set
-from .constants import EXP_LIVELLI, AbilitaEnum, AttributoEnum, ClassiEnum
+
+from .constants import EXP_LIVELLI, AbilitaEnum, AttributoEnum, ClassiEnum, RazzaEnum
 from .classi.base import Classe
 
 @dataclass
@@ -20,11 +20,6 @@ class Attributo:
     
     def __str__(self) -> str:
         return f"{self.nome[:3].upper()} {self.valore} ({self.modificatore:+})"
-    
-"""     def __str__(self) -> str:
-        ts_flag = " ✓" if self.ts else ""
-        return f"{self.nome[:3].upper()}: {self.valore} ({self.modificatore:+}){ts_flag}" """
-    
 
 
 @dataclass
@@ -40,28 +35,28 @@ class Abilita:
     def __str__(self) -> str:
         return f"{self.nome.label} ({self.attributo.nome[:3].upper()})"
 
-"""     def __str__(self) -> str:
-        comp_flag = " ✓" if self.competente else ""
-        return f"{self.nome}: {self.bonus(self.attributo.modificatore)}{comp_flag}" """
-
 
 @dataclass
 class Personaggio:
     nome: str
     classe_iniziale: ClassiEnum
 
+    id: int = 0
+    razza: RazzaEnum | None = None
     livello: int = 0
     exp: int = 0
-    classi: Dict[ClassiEnum, Classe] = field(default_factory=dict)
+    classi: dict[ClassiEnum, Classe] = field(default_factory=dict)
     hp: int = 0
 
-    attributi: Dict[AttributoEnum, Attributo] = field(default_factory=dict)
+    attributi: dict[AttributoEnum, Attributo] = field(default_factory=dict)
     competenze: set[AbilitaEnum] = field(default_factory=set)
 
-    armi: Set[str] = field(default_factory=set)
-    armature: Set[str] = field(default_factory=set)
-    tiri_salvezza: Set[AttributoEnum] = field(default_factory=set)
+    armi: set[str] = field(default_factory=set)
+    armature: set[str] = field(default_factory=set)
+    tiri_salvezza: set[AttributoEnum] = field(default_factory=set)
     scelta_abilita: dict = field(default_factory=dict)
+
+    descrizione: str = ""
 
     def __post_init__(self):
         if not self.nome:
@@ -88,7 +83,7 @@ class Personaggio:
         self.level_up(classe=self.classe_iniziale)
 
     @property
-    def abilita(self) -> List[Abilita]:
+    def abilita(self) -> list[Abilita]:
         return [
             Abilita(
                 abilita,
@@ -102,16 +97,20 @@ class Personaggio:
     def bonus_competenza(self) -> int:
         return 2 + (self.livello - 1) // 4
 
-    def add_exp(self, exp: int):
-        self.exp += exp
+    def add_exp(self, amount: int) -> None:
+        """Aggiunge EXP senza triggerare level-up automatici."""
+        self.exp = min(self.exp + amount, 355000)
 
-        while (
-            self.livello < 20
-            and self.exp >= EXP_LIVELLI[self.livello + 1]
-        ):
-            self.level_up()
+    def pending_levelups(self) -> int:
+        """Restituisce quanti level-up sono in attesa."""
+        count = 0
+        livello = self.livello
+        while livello < 20 and self.exp >= EXP_LIVELLI[livello + 1]:
+            livello += 1
+            count += 1
+        return count
 
-    def level_up(self, classe: ClassiEnum | None = None):
+    def level_up(self, classe: ClassiEnum | None = None) -> None:
         self.livello += 1
 
         if classe is None:
@@ -124,21 +123,10 @@ class Personaggio:
             self.classi[classe] = Classe(nome=classe)
 
         self.classi[classe].level_up(self)
-        if self.livello > 1:
-            print(f"Hai raggiunto il livello {self.livello}!")
 
     def aggiungi_feature(self, feature: str) -> None:
         # TODO: implementare il sistema di privilegi/feature
         pass
 
-
-        # TODO: logiche level up (aumento punti vita, miglioramento attributi, ecc.)
     def __str__(self) -> str:
         return f"{self.nome} — Liv.{self.livello} {self.classe_iniziale.value}"
-
-"""     def __str__(self) -> str:
-        classi = " - ".join(str(classe) for classe in self.classi.values())
-        attributi = "\n".join(str(attributo) for attributo in self.attributi.values())
-        abilita = "\n".join(str(abilita) for abilita in self.abilita)
-
-        return f"Livello: {self.livello}\nClasse: {classi}\nExp: {self.exp}\n\nBonus competenza: +{self.bonus_competenza}\n{attributi}\n\n{abilita}" """

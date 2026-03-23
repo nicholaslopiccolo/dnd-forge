@@ -1,22 +1,28 @@
 import asyncio
-from rich.console import Console
+
 from prompt_toolkit import PromptSession
-from prompt_toolkit.patch_stdout import patch_stdout
 from prompt_toolkit.history import FileHistory
 from prompt_toolkit.auto_suggest import AutoSuggestFromHistory
 from prompt_toolkit.completion import WordCompleter
 
 # Importa i moduli per registrare i comandi nel registry
+import commands.exit
 import commands.help
 import commands.pg
-# import commands.ps  ← aggiungi man mano
 
-from commands import dispatch, _REGISTRY
+from commands import dispatch, console, _REGISTRY
+from commands.pg import get_active_pg
 
-console = Console()
+
+def _make_prompt() -> str:
+    pg = get_active_pg()
+    if pg is None:
+        return "🎲 > "
+    classe_str = " / ".join(f"{c.nome.value} {c.livello}" for c in pg.classi.values())
+    return f"🎲 [{pg.nome} · {classe_str}] > "
+
 
 async def main():
-    # Autocompletamento Tab sui comandi registrati
     completer = WordCompleter(list(_REGISTRY.keys()), sentence=True)
 
     session = PromptSession(
@@ -27,15 +33,15 @@ async def main():
 
     console.print("[bold magenta]⚔️  DnD CLI[/bold magenta] — [dim]/help per i comandi[/dim]\n")
 
-    with patch_stdout():
-        while True:
-            try:
-                raw = await session.prompt_async("🎲 > ")
-            except (EOFError, KeyboardInterrupt):
-                console.print("\n[dim]Che la fortuna vi arrida, avventurieri.[/dim]")
-                break
+    while True:
+        try:
+            raw = await session.prompt_async(_make_prompt)
+        except (EOFError, KeyboardInterrupt, SystemExit):
+            console.print("\n[dim]Che la fortuna vi arrida, avventurieri.[/dim]")
+            break
 
-            if raw.strip():
-                await dispatch(raw)
+        if raw.strip():
+            await dispatch(raw)
+
 
 asyncio.run(main())
