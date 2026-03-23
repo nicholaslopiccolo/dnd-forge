@@ -1,5 +1,7 @@
-from pathlib import Path
+from .base import Classe
+from ..constants import ClassiEnum
 
-from .base import carica_classe
 
-Barbaro = carica_classe(Path(__file__).parent / "configurazioni" / "barbaro.json")
+def get_classe(nome: ClassiEnum) -> Classe:
+    """Restituisce un'istanza di Classe dalla configurazione JSON."""
+    return Classe.from_config(nome)

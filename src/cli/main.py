@@ -18,8 +18,7 @@ def _make_prompt() -> str:
     pg = get_active_pg()
     if pg is None:
         return "🎲 > "
-    classe_str = " / ".join(f"{c.nome.value} {c.livello}" for c in pg.classi.values())
-    return f"🎲 [{pg.nome} · {classe_str}] > "
+    return f"🎲 [{pg.nome} · {pg.classi_str}] > "
 
 
 async def main():

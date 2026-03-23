@@ -1,6 +1,6 @@
 from commands import command, console
 from InquirerPy import inquirer
-from models.constants import ClassiEnum, RazzaEnum, AttributoEnum, AbilitaEnum
+from models.constants import ClassiEnum, RazzaEnum, AttributoEnum, AbilitaEnum, ASI_LIVELLI, STANDARD_ARRAY
 from models.player import Personaggio, Attributo
 from models.classi.base import Classe as ClasseModel
 from rich.panel import Panel
@@ -10,11 +10,7 @@ from views.personaggio import pg_panel, pg_row
 import storage.repository as repo
 from utils.llm import genera_descrizione
 
-ASI_LIVELLI = {4, 8, 12, 16, 19}
-
 _active_pg: Personaggio | None = None
-
-STANDARD_ARRAY = [15, 14, 13, 12, 10, 8]
 
 
 def get_active_pg() -> Personaggio | None:
@@ -115,15 +111,6 @@ async def _chiedi_competenze(num_competenze: int) -> set[AbilitaEnum]:
     return set(scelte)
 
 
-def _mostra_lista_personaggi(personaggi: list[Personaggio]):
-    table = Table(title="Personaggi salvati", box=box.ROUNDED)
-    for col in ("ID", "Nome", "Razza", "Classe", "Livello", "EXP"):
-        table.add_column(col)
-    for p in personaggi:
-        table.add_row(*pg_row(p))
-    console.print(table)
-
-
 @command("/pg create", "Crea un nuovo personaggio in modo guidato")
 async def pg_create(_args):
     nome = await _chiedi_nome()
@@ -164,7 +151,7 @@ async def pg_list(_args):
         message="Seleziona un personaggio:",
         choices=[
             {
-                "name": f"[{p.id}] {p.nome} — {' / '.join(f'{c.nome.value} {c.livello}' for c in p.classi.values())}",
+                "name": f"[{p.id}] {p.nome} — {p.classi_str}",
                 "value": p,
             }
             for p in personaggi
@@ -183,9 +170,11 @@ async def pg_status(_args):
         console.print(pg_panel(pg))
 
 
-@command("/pg show", "Alias di /pg status")
+@command("/pg show", "Mostra la scheda del personaggio attivo (alias di /pg status)")
 async def pg_show(_args):
-    await pg_status(_args)
+    pg = _require_active_pg()
+    if pg:
+        console.print(pg_panel(pg))
 
 
 @command("/pg save", "Salva il personaggio attivo su disco")
@@ -327,12 +316,10 @@ async def pg_xp(args: list[str]):
 
     try:
         amount = int(args[0])
+        if amount <= 0:
+            raise ValueError
     except ValueError:
-        console.print(f"[red]'{args[0]}' non è un numero valido.[/red]")
-        return
-
-    if amount <= 0:
-        console.print("[red]La quantità deve essere positiva.[/red]")
+        console.print(f"[red]'{args[0]}' non è un numero valido o deve essere positivo.[/red]")
         return
 
     pg.add_exp(amount)

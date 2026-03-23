@@ -24,7 +24,7 @@ def _next_id() -> int:
 
 
 def save(pg: Personaggio) -> Personaggio:
-    """Salva il personaggio su disco. Assegna un ID se non ne ha ancora uno."""
+    """Persiste il PG su disco. Assegna un ID se non ne ha ancora uno."""
     if pg.id == 0:
         pg.id = _next_id()
     path = _saves_dir() / f"{pg.id}.json"
@@ -33,6 +33,7 @@ def save(pg: Personaggio) -> Personaggio:
 
 
 def load(pg_id: int) -> Personaggio:
+    """Carica un PG dal disco tramite ID."""
     path = _saves_dir() / f"{pg_id}.json"
     if not path.exists():
         raise FileNotFoundError(f"Personaggio con ID {pg_id} non trovato.")
@@ -40,6 +41,7 @@ def load(pg_id: int) -> Personaggio:
 
 
 def list_all() -> list[Personaggio]:
+    """Restituisce tutti i PG salvati, ordinati per ID."""
     return [
         from_dict(json.loads(p.read_text(encoding="utf-8")))
         for p in sorted(_saves_dir().glob("*.json"), key=lambda p: int(p.stem))

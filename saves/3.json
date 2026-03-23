@@ -3,12 +3,12 @@
   "nome": "Pulce",
   "classe_iniziale": "BARBARO",
   "razza": "GNOMO",
-  "livello": 15,
-  "exp": 300,
-  "hp": 80,
+  "livello": 17,
+  "exp": 15000,
+  "hp": 94,
   "attributi": {
     "FORZA": {
-      "valore": 16,
+      "valore": 18,
       "ts": true
     },
     "DESTREZZA": {
@@ -37,30 +37,30 @@
     "ACROBAZIA"
   ],
   "armi": [
-    "MARTELLO",
+    "ASCE",
     "SPADA_LUNGA",
     "ARCO_CORTO",
-    "ASCE"
+    "MARTELLO"
   ],
   "armature": [
-    "SCUDO",
     "ARMATURA_LEGGERA",
+    "SCUDO",
     "ARMATURA_MEDIA"
   ],
   "tiri_salvezza": [],
   "classi": {
     "BARBARO": {
-      "livello": 4,
+      "livello": 5,
       "hp_dado": 12,
       "competence_armi": [
-        "MARTELLO",
+        "ASCE",
         "SPADA_LUNGA",
         "ARCO_CORTO",
-        "ASCE"
+        "MARTELLO"
       ],
       "competence_armature": [
-        "SCUDO",
         "ARMATURA_LEGGERA",
+        "SCUDO",
         "ARMATURA_MEDIA"
       ],
       "tiri_salvezza": [
@@ -81,17 +81,17 @@
       },
       "skills_choices_num": 2,
       "skills_choices_opzioni": [
-        "FURTIVITA",
-        "PERCEZIONE",
         "NATURA",
+        "FURTIVITA",
+        "MEDICINA",
+        "PERCEZIONE",
         "INTUIZIONE",
-        "SOPRAVVIVENZA",
-        "MEDICINA"
+        "SOPRAVVIVENZA"
       ],
       "competenze_base": []
     },
     "MAGO": {
-      "livello": 2,
+      "livello": 3,
       "hp_dado": 0,
       "competence_armi": [],
       "competence_armature": [],

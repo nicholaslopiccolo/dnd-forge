@@ -7,6 +7,7 @@ from pathlib import Path
 
 @dataclass
 class Classe:
+    """Configurazione di una classe D&D per un PG."""
     nome: ClassiEnum
     livello: int = 0
     hp_dado: int = 0
@@ -81,6 +82,7 @@ class AbilitaDiClasse:
 
 
 def carica_classe(file_path: str) -> 'Classe':
+    """Deserializza una Classe da file JSON di configurazione."""
     with open(file_path, "r", encoding="utf-8") as f:
         dati = json.load(f)
 

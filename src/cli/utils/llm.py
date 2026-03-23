@@ -6,12 +6,18 @@ from __future__ import annotations
 import os
 from models.player import Personaggio
 
-_BASE_URL = "https://api.perplexity.ai"
+try:
+    from openai import AsyncOpenAI
+except ImportError as exc:
+    raise ImportError(
+        "La libreria 'openai' non è installata. Esegui: pip install openai"
+    ) from exc
+
+_BASE_URL = os.getenv("PERPLEXITY_BASE_URL", "https://api.perplexity.ai")
 MODEL = os.getenv("DND_LLM_MODEL", "sonar-pro")
 
 
 def _build_system_prompt(pg: Personaggio) -> str:
-    classi = ", ".join(f"{c.nome.value} (livello {c.livello})" for c in pg.classi.values())
     razza = pg.razza.value if pg.razza else "sconosciuta"
     attributi = "  ".join(
         f"{attr.value[:3].upper()} {a.valore} ({a.modificatore:+})"
@@ -30,7 +36,7 @@ def _build_system_prompt(pg: Personaggio) -> str:
         f"**Personaggio:**\n"
         f"- Nome: {pg.nome}\n"
         f"- Razza: {razza}\n"
-        f"- Classe/i: {classi}\n"
+        f"- Classe/i: {pg.classi_str}\n"
         f"- Livello totale: {pg.livello}\n"
         f"- Attributi: {attributi}\n"
         f"- Competenze nelle abilità: {competenze}\n"
@@ -39,13 +45,7 @@ def _build_system_prompt(pg: Personaggio) -> str:
 
 
 async def genera_descrizione(pg: Personaggio, flavor: str = "") -> str:
-    try:
-        from openai import AsyncOpenAI
-    except ImportError:
-        raise RuntimeError(
-            "La libreria 'openai' non è installata. Esegui: pip install openai"
-        )
-
+    """Genera una descrizione narrativa del PG via LLM."""
     api_key = os.getenv("PERPLEXITY_API_KEY")
     if not api_key:
         raise RuntimeError(

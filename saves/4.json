@@ -1,0 +1,106 @@
+{
+  "id": 4,
+  "nome": "Spillo",
+  "classe_iniziale": "BARBARO",
+  "razza": "TIEFLING",
+  "livello": 10,
+  "exp": 0,
+  "hp": 98,
+  "attributi": {
+    "FORZA": {
+      "valore": 18,
+      "ts": true
+    },
+    "DESTREZZA": {
+      "valore": 12,
+      "ts": false
+    },
+    "COSTITUZIONE": {
+      "valore": 16,
+      "ts": true
+    },
+    "INTELLIGENZA": {
+      "valore": 8,
+      "ts": false
+    },
+    "SAGGEZZA": {
+      "valore": 14,
+      "ts": false
+    },
+    "CARISMA": {
+      "valore": 9,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "ATLETICA",
+    "INTIMIDIRE"
+  ],
+  "armi": [
+    "ASCE",
+    "MARTELLO",
+    "ARCO_CORTO",
+    "SPADA_LUNGA"
+  ],
+  "armature": [
+    "ARMATURA_MEDIA",
+    "SCUDO",
+    "ARMATURA_LEGGERA"
+  ],
+  "tiri_salvezza": [],
+  "classi": {
+    "BARBARO": {
+      "livello": 9,
+      "hp_dado": 12,
+      "competence_armi": [
+        "ASCE",
+        "MARTELLO",
+        "ARCO_CORTO",
+        "SPADA_LUNGA"
+      ],
+      "competence_armature": [
+        "ARMATURA_MEDIA",
+        "SCUDO",
+        "ARMATURA_LEGGERA"
+      ],
+      "tiri_salvezza": [
+        "FORZA",
+        "COSTITUZIONE"
+      ],
+      "privilegi": {
+        "1": [
+          "rage",
+          "difesa_senza_armatura"
+        ],
+        "2": [
+          "attacco_spericolato"
+        ],
+        "5": [
+          "attacco_extra"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "FURTIVITA",
+        "NATURA",
+        "SOPRAVVIVENZA",
+        "MEDICINA",
+        "PERCEZIONE",
+        "INTUIZIONE"
+      ],
+      "competenze_base": []
+    },
+    "GUERRIERO": {
+      "livello": 1,
+      "hp_dado": 0,
+      "competence_armi": [],
+      "competence_armature": [],
+      "tiri_salvezza": [],
+      "privilegi": {},
+      "skills_choices_num": 0,
+      "skills_choices_opzioni": [],
+      "competenze_base": []
+    }
+  },
+  "descrizione": "Io sono Spillo, un tiefling barbaro nato dalle fiamme dell'Ade, con corna ritorte che graffiano il cielo e una pelle scarlatta segnata da vene pulsanti di rabbia infernale. La mia forza è un tuono primordiale, muscoli forgiati come catene di ferro che si tendono ad ogni passo, e la mia resistenza è una muraglia contro il dolore, il cuore che batte come un tamburo di guerra. Non brillo per astuzia o fascino – la mia mente è un turbine di istinti selvaggi, il carisma un ringhio basso che incute terrore – ma in battaglia divento furia incarnata.\n\nStringo l'ascia con mani callose, e quando la rabbia mi invade, scintille diaboliche spruzzano dalla lama, divorandola in schegge roventi ad ogni colpo furioso. Colpisco con atletica brutale, intimidendo i deboli con uno sguardo che promette annientamento, il mio corpo un'arma viva di muscoli e ira. Eppure, nel profondo, un terrore irrazionale mi assale: le api, quegli insetti ronzanti, mi fanno tremare come un cucciolo, un'eredità maldestra del mio sangue impuro.\n\nMa sopra ogni cosa, bramo la birra, un barile schiumante per spegnere la sete eterna della mia anima assetata. Combatto per la vendetta contro chi mi ha marchiato mostro, per un mondo che accetti la mia collera, o per annegare tutto in un boccale. La mia vita è un urlo di battaglia, un ciclo di rotture e rinascite."
+}

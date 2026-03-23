@@ -9,6 +9,7 @@ from models.classi.base import Classe
 
 
 def to_dict(pg: Personaggio) -> dict:
+    """Serializza un Personaggio in un dict JSON-compatibile."""
     return {
         "id": pg.id,
         "nome": pg.nome,
@@ -44,6 +45,7 @@ def to_dict(pg: Personaggio) -> dict:
 
 
 def from_dict(d: dict) -> Personaggio:
+    """Deserializza un Personaggio da un dict JSON."""
     classe_iniziale = ClassiEnum[d["classe_iniziale"]]
     razza = RazzaEnum[d["razza"]] if d.get("razza") else None
 
@@ -72,20 +74,19 @@ def from_dict(d: dict) -> Personaggio:
             competenze_base={AbilitaEnum[a] for a in cd["competenze_base"]},
         )
 
-    pg = Personaggio.__new__(Personaggio)
-    pg.id = d["id"]
-    pg.nome = d["nome"]
-    pg.classe_iniziale = classe_iniziale
-    pg.razza = razza
-    pg.livello = d["livello"]
-    pg.exp = d["exp"]
-    pg.hp = d["hp"]
-    pg.attributi = attributi
-    pg.competenze = {AbilitaEnum[a] for a in d["competenze"]}
-    pg.armi = set(d["armi"])
-    pg.armature = set(d["armature"])
-    pg.tiri_salvezza = {AttributoEnum[a] for a in d["tiri_salvezza"]}
-    pg.classi = classi
-    pg.scelta_abilita = {}
-    pg.descrizione = d.get("descrizione", "")
-    return pg
+    return Personaggio.from_saved(
+        id=d["id"],
+        nome=d["nome"],
+        classe_iniziale=classe_iniziale,
+        razza=razza,
+        livello=d["livello"],
+        exp=d["exp"],
+        hp=d["hp"],
+        attributi=attributi,
+        competenze={AbilitaEnum[a] for a in d["competenze"]},
+        armi=set(d["armi"]),
+        armature=set(d["armature"]),
+        tiri_salvezza={AttributoEnum[a] for a in d["tiri_salvezza"]},
+        classi=classi,
+        descrizione=d.get("descrizione", ""),
+    )

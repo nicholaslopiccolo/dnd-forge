@@ -1,3 +1,5 @@
+from __future__ import annotations
+
 from dataclasses import dataclass, field
 
 from .constants import EXP_LIVELLI, AbilitaEnum, AttributoEnum, ClassiEnum, RazzaEnum
@@ -5,6 +7,7 @@ from .classi.base import Classe
 
 @dataclass
 class Attributo:
+    """Un attributo base del PG (es. Forza, Destrezza)."""
     nome: str
     valore: int = 10
     ts: bool = False
@@ -24,6 +27,7 @@ class Attributo:
 
 @dataclass
 class Abilita:
+    """Un'abilità derivata da un attributo base."""
     nome: AbilitaEnum
     attributo: Attributo
     competente: bool = False
@@ -38,6 +42,7 @@ class Abilita:
 
 @dataclass
 class Personaggio:
+    """Rappresenta un personaggio giocante (PG) di D&D 5e."""
     nome: str
     classe_iniziale: ClassiEnum
 
@@ -94,6 +99,11 @@ class Personaggio:
         ]
 
     @property
+    def classi_str(self) -> str:
+        """Stringa compatta delle classi: es. '1° Guerriero / 2° Mago'."""
+        return " / ".join(f"{c.livello}\u00b0 {c.nome.value}" for c in self.classi.values())
+
+    @property
     def bonus_competenza(self) -> int:
         return 2 + (self.livello - 1) // 4
 
@@ -112,6 +122,7 @@ class Personaggio:
 
     def level_up(self, classe: ClassiEnum | None = None) -> None:
         self.livello += 1
+        self.exp = max(0, self.exp - EXP_LIVELLI[self.livello])  # rimuove EXP del livello appena raggiunto
 
         if classe is None:
             if len(self.classi) == 1:
@@ -127,6 +138,44 @@ class Personaggio:
     def aggiungi_feature(self, feature: str) -> None:
         # TODO: implementare il sistema di privilegi/feature
         pass
+
+    @classmethod
+    def from_saved(
+        cls,
+        *,
+        id: int,
+        nome: str,
+        classe_iniziale: ClassiEnum,
+        razza: RazzaEnum | None,
+        livello: int,
+        exp: int,
+        hp: int,
+        attributi: dict[AttributoEnum, Attributo],
+        competenze: set[AbilitaEnum],
+        armi: set[str],
+        armature: set[str],
+        tiri_salvezza: set[AttributoEnum],
+        classi: dict[ClassiEnum, Classe],
+        descrizione: str,
+    ) -> Personaggio:
+        """Factory per ricostruire un personaggio da dati già persistiti (bypassa __post_init__)."""
+        obj = cls.__new__(cls)
+        obj.id = id
+        obj.nome = nome
+        obj.classe_iniziale = classe_iniziale
+        obj.razza = razza
+        obj.livello = livello
+        obj.exp = exp
+        obj.hp = hp
+        obj.attributi = attributi
+        obj.competenze = competenze
+        obj.armi = armi
+        obj.armature = armature
+        obj.tiri_salvezza = tiri_salvezza
+        obj.classi = classi
+        obj.scelta_abilita = {}
+        obj.descrizione = descrizione
+        return obj
 
     def __str__(self) -> str:
         return f"{self.nome} — Liv.{self.livello} {self.classe_iniziale.value}"

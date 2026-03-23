@@ -7,9 +7,6 @@ from rich import box
 from models.player import Personaggio
 
 
-def _classi_str(pg: Personaggio) -> str:
-    return " / ".join(f"{c.livello}° {c.nome.value}" for c in pg.classi.values())
-
 def _make_grid(*renderables) -> Table:
     grid = Table.grid(padding=(0, 2))
     for _ in renderables:
@@ -19,8 +16,10 @@ def _make_grid(*renderables) -> Table:
 
 def _attr_table(pg: Personaggio) -> Table:
     t = Table(box=box.SIMPLE, show_header=True, header_style="bold cyan")
-    t.add_column("Attributi", style="cyan", width=5)
-
+    t.add_column("Attr", style="cyan", width=5)
+    t.add_column("Val", justify="right", width=4)
+    t.add_column("Mod", justify="right", width=4)
+    t.add_column("TS", justify="center", width=3)
     for attr_enum, attributo in pg.attributi.items():
         t.add_row(
             attr_enum.value[:3].upper(),
@@ -54,7 +53,7 @@ def _descrizione_panel(pg: Personaggio) -> Panel:
 
 
 def _info_panel(pg: Personaggio) -> Table:
-    classi = _classi_str(pg)
+    classi = pg.classi_str
     razza = pg.razza.value if pg.razza else "—"
     rows = [
         (f"🏹 [bold cyan]{classi}[/bold cyan]"),
@@ -74,6 +73,7 @@ def _info_panel(pg: Personaggio) -> Table:
 
 
 def pg_panel(pg: Personaggio) -> Panel:
+    """Costruisce il pannello Rich completo per la visualizzazione del PG."""
     right = Group(
         _make_grid(_attr_table(pg), _info_panel(pg)),
         _abilita_table(pg),
@@ -88,6 +88,6 @@ def pg_panel(pg: Personaggio) -> Panel:
 
 
 def pg_row(pg: Personaggio) -> tuple:
-    """Vista compatta per liste/tabelle."""
+    """Restituisce una tupla di stringhe per la riga nella tabella lista PG."""
     razza_str = pg.razza.value if pg.razza else "—"
-    return (str(pg.id), pg.nome, razza_str, _classi_str(pg), str(pg.livello), str(pg.exp))
+    return (str(pg.id), pg.nome, razza_str, pg.classi_str, str(pg.livello), str(pg.exp))
