@@ -97,16 +97,17 @@ async def _chiedi_attributi() -> dict[AttributoEnum, Attributo]:
     return await _attributi_manuali()
 
 
-async def _chiedi_competenze(num_competenze: int) -> set[AbilitaEnum]:
-    console.print(f"\n[dim]Scegli {num_competenze} abilità con competenza.[/dim]")
+async def _chiedi_competenze(num: int, opzioni: set[AbilitaEnum] | None = None) -> set[AbilitaEnum]:
+    pool = sorted(opzioni, key=lambda a: a.label) if opzioni else list(AbilitaEnum)
+    console.print(f"\n[dim]Scegli {num} abilità con competenza.[/dim]")
     scelte = await inquirer.checkbox(
-        message=f"Seleziona {num_competenze} abilità (spazio per selezionare):",
+        message=f"Seleziona {num} abilità (spazio per selezionare):",
         choices=[
             {"name": f"{a.label} [{a.attributo.value[:3].upper()}]", "value": a}
-            for a in AbilitaEnum
+            for a in pool
         ],
-        validate=lambda x: len(x) == num_competenze,
-        invalid_message=f"Devi selezionare esattamente {num_competenze} abilità.",
+        validate=lambda x: len(x) == num,
+        invalid_message=f"Devi selezionare esattamente {num} abilità.",
     ).execute_async()
     return set(scelte)
 
@@ -131,7 +132,8 @@ async def pg_create(_args):
 
     classe_obj = pg.classi[classe_iniziale]
     num_competenze = classe_obj.skills_choices_num or 2
-    pg.competenze = await _chiedi_competenze(num_competenze)
+    opzioni = classe_obj.skills_choices_opzioni if classe_obj.skills_choices_opzioni else None
+    pg.competenze = await _chiedi_competenze(num_competenze, opzioni)
 
     repo.save(pg)
     set_active_pg(pg)

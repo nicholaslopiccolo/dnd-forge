@@ -73,15 +73,6 @@ class Classe:
         return f"{self.livello}° {self.nome.value}"
 
 
-@dataclass
-class AbilitaDiClasse:
-    nome: str
-    descrizione: str
-
-    def __str__(self) -> str:
-        return f"{self.nome}: {self.descrizione}"
-
-
 def carica_classe(file_path: str) -> 'Classe':
     """Deserializza una Classe da file JSON di configurazione."""
     with open(file_path, "r", encoding="utf-8") as f:

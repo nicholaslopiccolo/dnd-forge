@@ -123,7 +123,9 @@ class Personaggio:
 
     def level_up(self, classe: ClassiEnum | None = None) -> None:
         self.livello += 1
-        self.exp = max(0, self.exp - EXP_LIVELLI[self.livello])  # rimuove EXP del livello appena raggiunto
+        # NOTE: EXP is reset per level (non-cumulative). Each level requires EXP_LIVELLI[level] earned
+        # from scratch — intentionally different from the standard D&D cumulative system.
+        self.exp = max(0, self.exp - EXP_LIVELLI[self.livello])
 
         if classe is None:
             if len(self.classi) == 1:
