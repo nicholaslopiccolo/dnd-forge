@@ -1,27 +1,21 @@
 # Piano di Refactoring — dnd-forge `src/cli`
 
-> **Destinatario:** agente automatico di refactoring  
-> **Principio guida:** nessun cambio funzionale, solo miglioramento di struttura, leggibilità e manutenibilità.  
-> **Ordine di esecuzione:** rispetta la sequenza numerica; ogni step dipende dai precedenti.
-
----
+> Destinatario: agente automatico di refactoringPrincipio guida: nessun cambio funzionale, solo miglioramento di struttura, leggibilità e manutenibilità.Ordine di esecuzione: rispetta la sequenza numerica; ogni step dipende dai precedenti.
 
 ## Contesto e problemi identificati
 
 | # | File | Problema |
-|---|------|----------|
-| 1 | `commands/pg.py` | File "god" da 400+ righe: mescola stato globale, logica UI, business logic e display |
-| 2 | Multipli file | `classi_str` del personaggio è inline in 4 posti diversi con formati diversi |
-| 3 | `models/constants.py` | Mancano `ASI_LIVELLI` e `STANDARD_ARRAY`, definiti in `commands/pg.py` |
-| 4 | `models/classi/classi.py` | Effetto collaterale a importazione: `carica_classe(...)` chiamata a livello di modulo |
-| 5 | `models/classi/guerriero.py` | File vuoto — dead code |
-| 6 | `storage/serializer.py` | Usa `Personaggio.__new__()` per bypassare `__post_init__` — code smell |
-| 7 | `commands/pg.py` | `_mostra_lista_personaggi()` definita ma mai chiamata — dead code |
-| 8 | `commands/pg.py` | `pg_show` è un wrapper vuoto intorno a `pg_status` — ridondante |
-| 9 | `views/personaggio.py` | `_attr_table` aggiunge 4 celle per riga ma dichiara 1 colonna — bug latente |
-| 10 | `utils/llm.py` | `_BASE_URL` hardcoded; `MODEL` letto da env a livello di modulo; import lazy inconsistente |
-
----
+| --- | --- | --- |
+| 1 | commands/pg.py | File "god" da 400+ righe: mescola stato globale, logica UI, business logic e display |
+| 2 | Multipli file | classi_str del personaggio è inline in 4 posti diversi con formati diversi |
+| 3 | models/constants.py | Mancano ASI_LIVELLI e STANDARD_ARRAY, definiti in commands/pg.py |
+| 4 | models/classi/classi.py | Effetto collaterale a importazione: carica_classe(...) chiamata a livello di modulo |
+| 5 | models/classi/guerriero.py | File vuoto — dead code |
+| 6 | storage/serializer.py | Usa Personaggio.__new__() per bypassare __post_init__ — code smell |
+| 7 | commands/pg.py | _mostra_lista_personaggi() definita ma mai chiamata — dead code |
+| 8 | commands/pg.py | pg_show è un wrapper vuoto intorno a pg_status — ridondante |
+| 9 | views/personaggio.py | _attr_table aggiunge 4 celle per riga ma dichiara 1 colonna — bug latente |
+| 10 | utils/llm.py | _BASE_URL hardcoded; MODEL letto da env a livello di modulo; import lazy inconsistente |
 
 ## Step 1 — `models/constants.py`: centralizza le costanti mancanti
 
@@ -36,8 +30,6 @@ STANDARD_ARRAY: tuple[int, ...] = (15, 14, 13, 12, 10, 8)
 ```
 
 Usa `frozenset` per `ASI_LIVELLI` (lookup O(1), immutabile) e `tuple` per `STANDARD_ARRAY` (ordinato, immutabile).
-
----
 
 ## Step 2 — `models/player.py`: aggiungi `classi_str` e `Personaggio.from_saved()`
 
@@ -100,13 +92,12 @@ def from_saved(
 
 Il bypass di `__post_init__` è *legittimo* qui: lo stato viene fornito già completo dal serializer. Renderlo esplicito con un classmethod chiarisce l'intento e rimuove la chiamata "magica" a `__new__` dal serializer.
 
----
-
 ## Step 3 — `storage/serializer.py`: usa `Personaggio.from_saved()`
 
 Nella funzione `from_dict`, sostituire il blocco di assegnazioni manuali post-`__new__`:
 
 **Da eliminare (blocco attuale):**
+
 ```python
 pg = Personaggio.__new__(Personaggio)
 pg.id = d["id"]
@@ -118,6 +109,7 @@ return pg
 ```
 
 **Con:**
+
 ```python
 return Personaggio.from_saved(
     id=d["id"],
@@ -136,8 +128,6 @@ return Personaggio.from_saved(
     descrizione=d.get("descrizione", ""),
 )
 ```
-
----
 
 ## Step 4 — `views/personaggio.py`: usa `classi_str`, correggi `_attr_table`
 
@@ -168,13 +158,12 @@ def _attr_table(pg: Personaggio) -> Table:
     return t
 ```
 
----
-
 ## Step 5 — `commands/pg.py`: import costanti, rimuovi dead code, semplifica
 
 ### 5a — Import da constants
 
 Rimuovere le definizioni locali e importare:
+
 ```python
 # Prima (da rimuovere):
 ASI_LIVELLI = {4, 8, 12, 16, 19}
@@ -191,12 +180,15 @@ La funzione è definita ma **mai chiamata** (il comando `/pg list` costruisce la
 ### 5c — Rimuovi `pg_show` come alias ridondante
 
 `pg_show` è identico a `pg_status`. Sostituire:
+
 ```python
 @command("/pg show", "Alias di /pg status")
 async def pg_show(_args):
     await pg_status(_args)
 ```
+
 Con una registrazione diretta dello stesso handler:
+
 ```python
 # Registra pg_status anche come /pg show
 command("/pg show", "Mostra la scheda del personaggio attivo (alias di /pg status)")(pg_status)
@@ -237,8 +229,6 @@ except ValueError:
     return
 ```
 
----
-
 ## Step 6 — `main.py`: usa `pg.classi_str`
 
 Nella funzione `_make_prompt`:
@@ -251,8 +241,6 @@ return f"🎲 [{pg.nome} · {classe_str}] > "
 # Dopo:
 return f"🎲 [{pg.nome} · {pg.classi_str}] > "
 ```
-
----
 
 ## Step 7 — `utils/llm.py`: usa `classi_str`, rendi `_BASE_URL` configurabile
 
@@ -289,8 +277,6 @@ except ImportError as exc:
     ) from exc
 ```
 
----
-
 ## Step 8 — `models/classi/classi.py`: rimuovi effetti collaterali
 
 Il file oggi esegue `carica_classe(...)` a livello di modulo (al momento dell'`import`), il che causa un errore se il JSON non esiste o il CWD è sbagliato.
@@ -310,55 +296,47 @@ def get_classe(nome: ClassiEnum) -> Classe:
     return Classe.from_config(nome)
 ```
 
-Oppure, se il file non serve a nulla (dato che `Classe.from_config` in `base.py` già gestisce il caricamento), **eliminare `classi.py` del tutto** e aggiornare eventuali import.
-
----
+Oppure, se il file non serve a nulla (dato che `Classe.from_config` in `base.py` già gestisce il caricamento), **eliminare **`classi.py`** del tutto** e aggiornare eventuali import.
 
 ## Step 9 — `models/classi/guerriero.py`: rimuovi file vuoto
 
 Il file è vuoto. Va eliminato. Verificare che nessun modulo lo importi prima di eliminarlo.
-
----
 
 ## Step 10 — Docstring "ready to document"
 
 Aggiungere docstring minime (una riga) alle funzioni/classi pubbliche prive di documentazione:
 
 | Simbolo | File | Docstring suggerita |
-|---------|------|---------------------|
-| `Personaggio` | `models/player.py` | `"""Rappresenta un personaggio giocante (PG) di D&D 5e."""` |
-| `Attributo` | `models/player.py` | `"""Un attributo base del PG (es. Forza, Destrezza)."""` |
-| `Abilita` | `models/player.py` | `"""Un'abilità derivata da un attributo base."""` |
-| `Classe` | `models/classi/base.py` | `"""Configurazione di una classe D&D per un PG."""` |
-| `carica_classe` | `models/classi/base.py` | `"""Deserializza una Classe da file JSON di configurazione."""` |
-| `to_dict` | `storage/serializer.py` | `"""Serializza un Personaggio in un dict JSON-compatibile."""` |
-| `from_dict` | `storage/serializer.py` | `"""Deserializza un Personaggio da un dict JSON."""` |
-| `save` | `storage/repository.py` | `"""Persiste il PG su disco, assegnando un ID se necessario."""` |
-| `load` | `storage/repository.py` | `"""Carica un PG dal disco tramite ID."""` |
-| `list_all` | `storage/repository.py` | `"""Restituisce tutti i PG salvati, ordinati per ID."""` |
-| `genera_descrizione` | `utils/llm.py` | `"""Genera una descrizione narrativa del PG via LLM."""` |
-| `pg_panel` | `views/personaggio.py` | `"""Costruisce il pannello Rich completo per la visualizzazione del PG."""` |
-| `pg_row` | `views/personaggio.py` | `"""Restituisce una tupla di stringhe per la riga nella tabella lista PG."""` |
-
----
+| --- | --- | --- |
+| Personaggio | models/player.py | """Rappresenta un personaggio giocante (PG) di D&D 5e.""" |
+| Attributo | models/player.py | """Un attributo base del PG (es. Forza, Destrezza).""" |
+| Abilita | models/player.py | """Un'abilità derivata da un attributo base.""" |
+| Classe | models/classi/base.py | """Configurazione di una classe D&D per un PG.""" |
+| carica_classe | models/classi/base.py | """Deserializza una Classe da file JSON di configurazione.""" |
+| to_dict | storage/serializer.py | """Serializza un Personaggio in un dict JSON-compatibile.""" |
+| from_dict | storage/serializer.py | """Deserializza un Personaggio da un dict JSON.""" |
+| save | storage/repository.py | """Persiste il PG su disco, assegnando un ID se necessario.""" |
+| load | storage/repository.py | """Carica un PG dal disco tramite ID.""" |
+| list_all | storage/repository.py | """Restituisce tutti i PG salvati, ordinati per ID.""" |
+| genera_descrizione | utils/llm.py | """Genera una descrizione narrativa del PG via LLM.""" |
+| pg_panel | views/personaggio.py | """Costruisce il pannello Rich completo per la visualizzazione del PG.""" |
+| pg_row | views/personaggio.py | """Restituisce una tupla di stringhe per la riga nella tabella lista PG.""" |
 
 ## Riepilogo delle modifiche per file
 
 | File | Azione |
-|------|--------|
-| `models/constants.py` | Aggiunta `ASI_LIVELLI`, `STANDARD_ARRAY` |
-| `models/player.py` | Aggiunta property `classi_str`, classmethod `from_saved()`, docstring |
-| `models/classi/base.py` | Docstring su `Classe` e `carica_classe` |
-| `models/classi/classi.py` | Rimozione effetti collaterali o eliminazione file |
-| `models/classi/guerriero.py` | **Eliminare** (file vuoto) |
-| `storage/serializer.py` | Usa `Personaggio.from_saved()`, docstring |
-| `storage/repository.py` | Docstring |
-| `commands/pg.py` | Import costanti da `constants`, rimozione dead code, usa `classi_str`, semplifica guard clause |
-| `views/personaggio.py` | Rimozione `_classi_str()`, usa `pg.classi_str`, fix `_attr_table`, docstring |
-| `main.py` | Usa `pg.classi_str` |
-| `utils/llm.py` | Usa `pg.classi_str`, `_BASE_URL` da env, normalizza import |
-
----
+| --- | --- |
+| models/constants.py | Aggiunta ASI_LIVELLI, STANDARD_ARRAY |
+| models/player.py | Aggiunta property classi_str, classmethod from_saved(), docstring |
+| models/classi/base.py | Docstring su Classe e carica_classe |
+| models/classi/classi.py | Rimozione effetti collaterali o eliminazione file |
+| models/classi/guerriero.py | Eliminare (file vuoto) |
+| storage/serializer.py | Usa Personaggio.from_saved(), docstring |
+| storage/repository.py | Docstring |
+| commands/pg.py | Import costanti da constants, rimozione dead code, usa classi_str, semplifica guard clause |
+| views/personaggio.py | Rimozione _classi_str(), usa pg.classi_str, fix _attr_table, docstring |
+| main.py | Usa pg.classi_str |
+| utils/llm.py | Usa pg.classi_str, _BASE_URL da env, normalizza import |
 
 ## Invarianti da rispettare
 
