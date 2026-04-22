@@ -37,6 +37,12 @@ class Classe:
             return carica_classe(file_path)
         return cls(nome=nome)
 
+    @staticmethod
+    def has_config(nome: ClassiEnum) -> bool:
+        """Returns True if a JSON configuration file exists for this class."""
+        file_path = Path(__file__).parent / "configurazioni" / f"{nome.value.lower()}.json"
+        return file_path.exists()
+
     def level_up(self, personaggio) -> None:
         """Applica un livello alla classe: incrementa livello, calcola HP, assegna competenze al Lv1."""
         self.livello += 1

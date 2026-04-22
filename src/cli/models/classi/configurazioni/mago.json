@@ -1,0 +1,30 @@
+{
+  "nome": "Mago",
+  "hp_dado": 6,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": [],
+  "tiri_salvezza": ["INTELLIGENZA", "SAGGEZZA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "ARCANO",
+      "INDAGARE",
+      "INTUIZIONE",
+      "MEDICINA",
+      "RELIGIONE",
+      "STORIA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["incantare", "recupero_arcano"],
+    "2": ["tradizione_arcana"],
+    "6": ["caratteristica_della_tradizione"],
+    "10": ["caratteristica_della_tradizione"],
+    "14": ["caratteristica_della_tradizione"],
+    "18": ["maestria_degli_incantesimi"],
+    "20": ["firma_degli_incantesimi"]
+  }
+}

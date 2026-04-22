@@ -2,7 +2,7 @@ from commands import command, console
 from InquirerPy import inquirer
 from models.constants import ClassiEnum, RazzaEnum, AttributoEnum, AbilitaEnum, ASI_LIVELLI, STANDARD_ARRAY
 from models.player import Personaggio, Attributo
-from models.classi.base import Classe as ClasseModel
+from models.classi.base import Classe
 from rich.panel import Panel
 from rich.table import Table
 from rich import box
@@ -40,7 +40,7 @@ async def _chiedi_nome() -> str:
 async def _chiedi_classe() -> ClassiEnum:
     return await inquirer.select(
         message="Scegli la classe iniziale:",
-        choices=[{"name": c.value, "value": c} for c in ClassiEnum],
+        choices=[{"name": c.value, "value": c} for c in ClassiEnum if Classe.has_config(c)],
     ).execute_async()
 
 
@@ -277,7 +277,7 @@ async def _esegui_levelup(pg: Personaggio) -> None:
             classe = scelta
             break
 
-        classi_disponibili = [c for c in ClassiEnum if c not in pg.classi]
+        classi_disponibili = [c for c in ClassiEnum if c not in pg.classi and Classe.has_config(c)]
         if not classi_disponibili:
             console.print("[yellow]Tutte le classi sono già presenti.[/yellow]")
             continue

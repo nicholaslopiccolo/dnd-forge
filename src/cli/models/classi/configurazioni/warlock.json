@@ -1,0 +1,35 @@
+{
+  "nome": "Warlock",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": ["ARMATURA_LEGGERA"],
+  "tiri_salvezza": ["SAGGEZZA", "CARISMA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "ARCANO",
+      "INDAGARE",
+      "INGANNARE",
+      "INTIMIDIRE",
+      "NATURA",
+      "RELIGIONE",
+      "STORIA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["patrono_sovrannaturale", "magia_del_patto"],
+    "2": ["invocazioni_occulte"],
+    "3": ["dono_del_patto"],
+    "6": ["capacita_del_patrono"],
+    "10": ["capacita_del_patrono"],
+    "11": ["arcanum_mistico_6"],
+    "13": ["arcanum_mistico_7"],
+    "14": ["capacita_del_patrono"],
+    "15": ["arcanum_mistico_8"],
+    "17": ["arcanum_mistico_9"],
+    "20": ["padrone_supremo"]
+  }
+}

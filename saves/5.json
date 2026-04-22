@@ -1,0 +1,93 @@
+{
+  "id": 5,
+  "nome": "Giulia",
+  "classe_iniziale": "MAGO",
+  "razza": "MEZZELFO",
+  "livello": 1,
+  "exp": 0,
+  "hp": 8,
+  "attributi": {
+    "FORZA": {
+      "valore": 8,
+      "ts": false
+    },
+    "DESTREZZA": {
+      "valore": 10,
+      "ts": false
+    },
+    "COSTITUZIONE": {
+      "valore": 14,
+      "ts": false
+    },
+    "INTELLIGENZA": {
+      "valore": 15,
+      "ts": true
+    },
+    "SAGGEZZA": {
+      "valore": 13,
+      "ts": true
+    },
+    "CARISMA": {
+      "valore": 12,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "INTUIZIONE",
+    "ARCANO"
+  ],
+  "armi": [
+    "ARMI_SEMPLICI"
+  ],
+  "armature": [],
+  "tiri_salvezza": [],
+  "classi": {
+    "MAGO": {
+      "livello": 1,
+      "hp_dado": 6,
+      "competence_armi": [
+        "ARMI_SEMPLICI"
+      ],
+      "competence_armature": [],
+      "tiri_salvezza": [
+        "SAGGEZZA",
+        "INTELLIGENZA"
+      ],
+      "privilegi": {
+        "1": [
+          "incantare",
+          "recupero_arcano"
+        ],
+        "2": [
+          "tradizione_arcana"
+        ],
+        "6": [
+          "caratteristica_della_tradizione"
+        ],
+        "10": [
+          "caratteristica_della_tradizione"
+        ],
+        "14": [
+          "caratteristica_della_tradizione"
+        ],
+        "18": [
+          "maestria_degli_incantesimi"
+        ],
+        "20": [
+          "firma_degli_incantesimi"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "MEDICINA",
+        "STORIA",
+        "INTUIZIONE",
+        "INDAGARE",
+        "RELIGIONE",
+        "ARCANO"
+      ],
+      "competenze_base": []
+    }
+  },
+  "descrizione": ""
+}
