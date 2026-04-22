@@ -32,6 +32,8 @@ def _attr_table(pg: Personaggio) -> Table:
 def _abilita_table(pg: Personaggio) -> Table:
     t = Table(box=box.SIMPLE, show_header=True, header_style="bold magenta")
     t.add_column("Abilità", width=24)
+    t.add_column("Bonus", justify="right", width=5)
+    t.add_column("", justify="center", width=3)
 
     for abilita in pg.abilita:
         bonus = abilita.bonus(pg.bonus_competenza)

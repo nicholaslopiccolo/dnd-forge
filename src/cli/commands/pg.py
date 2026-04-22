@@ -170,12 +170,7 @@ async def pg_status(_args):
         console.print(pg_panel(pg))
 
 
-@command("/pg show", "Mostra la scheda del personaggio attivo (alias di /pg status)")
-async def pg_show(_args):
-    pg = _require_active_pg()
-    if pg:
-        console.print(pg_panel(pg))
-
+command("/pg show", "Mostra la scheda del personaggio attivo (alias di /pg status)")(pg_status)
 
 @command("/pg save", "Salva il personaggio attivo su disco")
 async def pg_save(_args):
