@@ -1,0 +1,39 @@
+{
+  "nome": "Monaco",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI", "SPADA_CORTA"],
+  "competence_armature": [],
+  "tiri_salvezza": ["FORZA", "DESTREZZA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": ["ACROBAZIA", "ATLETICA", "STORIA", "INTUIZIONE", "RELIGIONE", "FURTIVITA"]
+  },
+
+  "prerequisiti_multiclasse_and": { "DESTREZZA": 13, "SAGGEZZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": ["ACROBAZIA", "ATLETICA"]
+  },
+
+  "privilegi": {
+    "1": ["arti_marziali", "ki"],
+    "2": ["movimento_senza_armatura", "caduta_rallentata"],
+    "3": ["tradizione_monastica", "deflessione_proiettili"],
+    "5": ["attacco_extra", "stordire_i_colpi"],
+    "6": ["capacita_tradizione", "colpi_magici"],
+    "7": ["evasione", "quiete_della_mente"],
+    "9": ["movimento_senza_armatura_2"],
+    "10": ["purezza_del_corpo"],
+    "11": ["capacita_tradizione"],
+    "13": ["lingua_del_sole_e_della_luna"],
+    "14": ["anima_diamante"],
+    "15": ["corpo_senza_tempo"],
+    "17": ["capacita_tradizione"],
+    "18": ["corpo_vuoto"],
+    "20": ["perfezione_del_se"]
+  }
+}

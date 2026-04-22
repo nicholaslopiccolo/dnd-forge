@@ -1,0 +1,45 @@
+{
+  "nome": "Guerriero",
+  "hp_dado": 10,
+
+  "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "ARMATURA_PESANTE", "SCUDO"],
+  "tiri_salvezza": ["FORZA", "COSTITUZIONE"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "ACROBAZIA", "ADDESTRARE_ANIMALI", "ATLETICA",
+      "STORIA", "INTUIZIONE", "INTIMIDIRE", "PERCEZIONE", "SOPRAVVIVENZA"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": {},
+  "prerequisiti_multiclasse_or": { "FORZA": 13, "DESTREZZA": 13 },
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": [
+      "ACROBAZIA", "ADDESTRARE_ANIMALI", "ATLETICA",
+      "STORIA", "INTUIZIONE", "INTIMIDIRE", "PERCEZIONE", "SOPRAVVIVENZA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["stile_di_combattimento", "secondo_respiro"],
+    "2": ["azione_scatto"],
+    "3": ["archetipo_marziale"],
+    "5": ["attacco_extra"],
+    "6": ["asi_extra"],
+    "7": ["capacita_archetipo"],
+    "9": ["indomabile"],
+    "10": ["capacita_archetipo"],
+    "11": ["attacco_extra_2"],
+    "13": ["indomabile_2"],
+    "14": ["asi_extra"],
+    "15": ["capacita_archetipo"],
+    "17": ["azione_scatto_2", "indomabile_3"],
+    "18": ["capacita_archetipo"],
+    "20": ["attacco_extra_3"]
+  }
+}

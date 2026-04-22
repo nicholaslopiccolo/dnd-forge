@@ -1,0 +1,45 @@
+{
+  "nome": "Ladro",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI", "BALESTRA_A_MANO", "SPADA_LUNGA", "STOCCO", "SPADA_CORTA"],
+  "competence_armature": ["ARMATURA_LEGGERA"],
+  "tiri_salvezza": ["DESTREZZA", "INTELLIGENZA"],
+
+  "skills_choices": {
+    "numero": 4,
+    "opzioni": [
+      "ACROBAZIA", "ATLETICA", "INGANNARE", "INTUIZIONE", "INTIMIDIRE",
+      "INDAGARE", "PERCEZIONE", "INTRATTENERE", "PERSUASIONE", "RAPIDITA_DI_MANO", "FURTIVITA"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": { "DESTREZZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": [
+      "ACROBAZIA", "ATLETICA", "INGANNARE", "INTUIZIONE", "INTIMIDIRE",
+      "INDAGARE", "PERCEZIONE", "INTRATTENERE", "PERSUASIONE", "RAPIDITA_DI_MANO", "FURTIVITA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["perizia", "attacco_furtivo", "gergo_dei_ladri"],
+    "2": ["azione_scaltra"],
+    "3": ["archetipo_malizioso"],
+    "5": ["schivata_prodigiosa"],
+    "6": ["perizia_2"],
+    "7": ["evasione"],
+    "9": ["capacita_archetipo"],
+    "10": ["asi_extra"],
+    "11": ["talento_affidabile"],
+    "13": ["capacita_archetipo"],
+    "14": ["senso_cieco"],
+    "15": ["mente_sfuggente"],
+    "17": ["capacita_archetipo"],
+    "18": ["imprendibile"],
+    "20": ["colpo_di_grazia"]
+  }
+}

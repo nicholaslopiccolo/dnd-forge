@@ -1,0 +1,44 @@
+{
+  "nome": "Ranger",
+  "hp_dado": 10,
+
+  "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "tiri_salvezza": ["FORZA", "DESTREZZA"],
+
+  "skills_choices": {
+    "numero": 3,
+    "opzioni": [
+      "ADDESTRARE_ANIMALI", "ATLETICA", "INTUIZIONE",
+      "INDAGARE", "NATURA", "PERCEZIONE", "FURTIVITA", "SOPRAVVIVENZA"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": { "DESTREZZA": 13, "SAGGEZZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": [
+      "ADDESTRARE_ANIMALI", "ATLETICA", "INTUIZIONE",
+      "INDAGARE", "NATURA", "PERCEZIONE", "FURTIVITA", "SOPRAVVIVENZA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["nemico_favorito", "esploratore_naturale"],
+    "2": ["stile_di_combattimento", "incantare"],
+    "3": ["archetipo_del_ranger", "consapevolezza_primordiale"],
+    "5": ["attacco_extra"],
+    "6": ["nemico_favorito_2", "esploratore_naturale_2"],
+    "7": ["capacita_archetipo"],
+    "8": ["passo_sulla_terra"],
+    "9": ["nemico_favorito_3"],
+    "10": ["esploratore_naturale_3", "nascondersi_nella_folla"],
+    "11": ["capacita_archetipo"],
+    "14": ["sparizione"],
+    "15": ["capacita_archetipo"],
+    "18": ["sensi_ferini"],
+    "20": ["predatore_acerrimo"]
+  }
+}

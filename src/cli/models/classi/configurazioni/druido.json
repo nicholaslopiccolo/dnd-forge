@@ -1,0 +1,34 @@
+{
+  "nome": "Druido",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "tiri_salvezza": ["INTELLIGENZA", "SAGGEZZA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "ARCANO", "ADDESTRARE_ANIMALI", "INTUIZIONE",
+      "MEDICINA", "NATURA", "PERCEZIONE", "RELIGIONE", "SOPRAVVIVENZA"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": { "SAGGEZZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
+  },
+
+  "privilegi": {
+    "1": ["druidico", "incantare"],
+    "2": ["forma_selvatica", "cerchio_druidico"],
+    "6": ["capacita_del_cerchio"],
+    "10": ["capacita_del_cerchio"],
+    "14": ["capacita_del_cerchio"],
+    "18": ["corpo_senza_tempo", "incantesimi_di_bestia"],
+    "20": ["arcidruidismo"]
+  }
+}

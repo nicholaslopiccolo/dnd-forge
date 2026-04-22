@@ -1,0 +1,38 @@
+{
+  "nome": "Chierico",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "tiri_salvezza": ["SAGGEZZA", "CARISMA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": ["STORIA", "INTUIZIONE", "MEDICINA", "PERSUASIONE", "RELIGIONE"]
+  },
+
+  "prerequisiti_multiclasse_and": { "SAGGEZZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
+  },
+
+  "privilegi": {
+    "1": ["incantare", "dominio_divino"],
+    "2": ["incanalare_divinita", "dominio_divino_2"],
+    "3": ["dominio_divino_3"],
+    "5": ["distruggi_non_morti"],
+    "6": ["incanalare_divinita_2", "dominio_divino_6"],
+    "7": ["dominio_divino_7"],
+    "8": ["distruggi_non_morti_2", "dominio_divino_8"],
+    "10": ["intervento_divino"],
+    "11": ["distruggi_non_morti_3"],
+    "14": ["distruggi_non_morti_4"],
+    "15": ["dominio_divino_15"],
+    "17": ["distruggi_non_morti_5", "dominio_divino_17"],
+    "18": ["incanalare_divinita_3"],
+    "20": ["intervento_divino_migliorato"]
+  }
+}

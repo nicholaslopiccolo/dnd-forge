@@ -1,0 +1,33 @@
+{
+  "nome": "Stregone",
+  "hp_dado": 6,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": [],
+  "tiri_salvezza": ["COSTITUZIONE", "CARISMA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": ["ARCANO", "INGANNARE", "INTUIZIONE", "INTIMIDIRE", "PERSUASIONE", "RELIGIONE"]
+  },
+
+  "prerequisiti_multiclasse_and": { "CARISMA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
+  },
+
+  "privilegi": {
+    "1": ["incantare", "origine_stregonesca"],
+    "2": ["punti_stregoneria"],
+    "3": ["metamagia"],
+    "6": ["capacita_origine"],
+    "10": ["metamagia_2"],
+    "14": ["capacita_origine"],
+    "17": ["metamagia_3"],
+    "18": ["capacita_origine"],
+    "20": ["restaurazione_stregonesca"]
+  }
+}

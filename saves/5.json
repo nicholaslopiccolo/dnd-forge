@@ -3,9 +3,9 @@
   "nome": "Giulia",
   "classe_iniziale": "MAGO",
   "razza": "MEZZELFO",
-  "livello": 1,
+  "livello": 3,
   "exp": 0,
-  "hp": 8,
+  "hp": 13,
   "attributi": {
     "FORZA": {
       "valore": 8,
@@ -50,8 +50,8 @@
       ],
       "competence_armature": [],
       "tiri_salvezza": [
-        "SAGGEZZA",
-        "INTELLIGENZA"
+        "INTELLIGENZA",
+        "SAGGEZZA"
       ],
       "privilegi": {
         "1": [
@@ -79,13 +79,24 @@
       },
       "skills_choices_num": 2,
       "skills_choices_opzioni": [
-        "MEDICINA",
-        "STORIA",
         "INTUIZIONE",
-        "INDAGARE",
+        "STORIA",
+        "MEDICINA",
         "RELIGIONE",
+        "INDAGARE",
         "ARCANO"
       ],
+      "competenze_base": []
+    },
+    "PALADINO": {
+      "livello": 2,
+      "hp_dado": 0,
+      "competence_armi": [],
+      "competence_armature": [],
+      "tiri_salvezza": [],
+      "privilegi": {},
+      "skills_choices_num": 0,
+      "skills_choices_opzioni": [],
       "competenze_base": []
     }
   },

@@ -8,14 +8,15 @@
 
   "skills_choices": {
     "numero": 2,
-    "opzioni": [
-      "ARCANO",
-      "INDAGARE",
-      "INTUIZIONE",
-      "MEDICINA",
-      "RELIGIONE",
-      "STORIA"
-    ]
+    "opzioni": ["ARCANO", "INDAGARE", "INTUIZIONE", "MEDICINA", "RELIGIONE", "STORIA"]
+  },
+
+  "prerequisiti_multiclasse_and": { "INTELLIGENZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
   },
 
   "privilegi": {

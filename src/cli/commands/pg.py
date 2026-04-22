@@ -12,6 +12,67 @@ from utils.llm import genera_descrizione
 
 _active_pg: Personaggio | None = None
 
+_ARMOR_LABELS: dict[str, str] = {
+    "ARMATURA_LEGGERA": "Legg",
+    "ARMATURA_MEDIA": "Media",
+    "ARMATURA_PESANTE": "Pesante",
+    "SCUDO": "Scudo",
+}
+_ARMOR_ORDER = ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "ARMATURA_PESANTE", "SCUDO"]
+
+
+def _base_cols(cls: Classe, nome: ClassiEnum) -> tuple[str, str, str]:
+    """Returns (hp_str, ts_str, armature_str) for a class config."""
+    hp = f"d{cls.hp_dado}" if cls.hp_dado else "—"
+    ts = " · ".join(sorted(a.value[:3].upper() for a in cls.tiri_salvezza)) if cls.tiri_salvezza else "—"
+    armature = " · ".join(_ARMOR_LABELS[a] for a in _ARMOR_ORDER if a in cls.competence_armature) or "—"
+    return hp, ts, armature
+
+
+def _format_classe_creazione(nome: ClassiEnum) -> str:
+    """Row for initial class creation: shows HP, TS and armor."""
+    cls = Classe.from_config(nome)
+    hp, ts, armature = _base_cols(cls, nome)
+    return f"{nome.value:<13} {hp:<5} {ts:<12} {armature}"
+
+
+def _build_multiclasse_choice(nome: ClassiEnum, pg: Personaggio) -> dict:
+    """Builds an InquirerPy choice dict for multiclass selection with prerequisite gating."""
+    cls = Classe.from_config(nome)
+    hp, ts, armature = _base_cols(cls, nome)
+
+    # Prerequisites summary string
+    prereq_parts = []
+    for attr, val in cls.prerequisiti_and.items():
+        prereq_parts.append(f"{attr.value[:3].upper()} {val}")
+    if cls.prerequisiti_or:
+        nomi = "/".join(a.value[:3].upper() for a in cls.prerequisiti_or)
+        v = next(iter(cls.prerequisiti_or.values()))
+        prereq_parts.append(f"{nomi} {v}")
+    prereq_str = " · ".join(prereq_parts) if prereq_parts else "—"
+
+    # Multiclass skills gained
+    mc = f"+{cls.multiclass_skills_num} abilità" if cls.multiclass_skills_num else "—"
+
+    ok, motivo = cls.verifica_prerequisiti(pg)
+    status = "✓" if ok else f"✗  {motivo}"
+    name = f"{nome.value:<13} {hp:<5} {ts:<12} {armature:<24} {prereq_str:<18} {mc:<12} {status}"
+
+    choice: dict = {"name": name, "value": nome}
+    if not ok:
+        choice["disabled"] = motivo
+    return choice
+
+
+def _stampa_header_creazione() -> None:
+    console.print(f"[dim]  {'Classe':<13} {'HP':<5} {'TS':<12} Armature[/dim]")
+
+
+def _stampa_header_multiclasse() -> None:
+    console.print(
+        f"[dim]  {'Classe':<13} {'HP':<5} {'TS':<12} {'Armature':<24} {'Prerequisiti':<18} {'MC skills':<12} Stato[/dim]"
+    )
+
 
 def get_active_pg() -> Personaggio | None:
     return _active_pg
@@ -38,9 +99,14 @@ async def _chiedi_nome() -> str:
 
 
 async def _chiedi_classe() -> ClassiEnum:
+    _stampa_header_creazione()
     return await inquirer.select(
         message="Scegli la classe iniziale:",
-        choices=[{"name": c.value, "value": c} for c in ClassiEnum if Classe.has_config(c)],
+        choices=[
+            {"name": _format_classe_creazione(c), "value": c}
+            for c in ClassiEnum
+            if Classe.has_config(c)
+        ],
     ).execute_async()
 
 
@@ -282,10 +348,13 @@ async def _esegui_levelup(pg: Personaggio) -> None:
             console.print("[yellow]Tutte le classi sono già presenti.[/yellow]")
             continue
 
+        _stampa_header_multiclasse()
         nuova = await inquirer.select(
             message="Scegli la nuova classe da aggiungere:",
-            choices=[{"name": c.value, "value": c} for c in classi_disponibili]
-                + [{"name": "Annulla e torna indietro", "value": None}],
+            choices=[
+                _build_multiclasse_choice(c, pg)
+                for c in classi_disponibili
+            ] + [{"name": "  ─── Annulla e torna indietro", "value": None}],
         ).execute_async()
 
         if nuova is not None:

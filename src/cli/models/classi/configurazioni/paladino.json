@@ -1,0 +1,39 @@
+{
+  "nome": "Paladino",
+  "hp_dado": 10,
+
+  "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "ARMATURA_PESANTE", "SCUDO"],
+  "tiri_salvezza": ["SAGGEZZA", "CARISMA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": ["ATLETICA", "INTUIZIONE", "INTIMIDIRE", "MEDICINA", "PERSUASIONE", "RELIGIONE"]
+  },
+
+  "prerequisiti_multiclasse_and": { "FORZA": 13, "CARISMA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
+  },
+
+  "privilegi": {
+    "1": ["senso_divino", "imposizione_delle_mani"],
+    "2": ["stile_di_combattimento", "incantare", "punizione_divina"],
+    "3": ["salute_divina", "giuramento_sacro"],
+    "5": ["attacco_extra"],
+    "6": ["aura_di_protezione"],
+    "7": ["caratteristica_del_giuramento"],
+    "9": ["caratteristica_del_giuramento"],
+    "10": ["aura_di_coraggio"],
+    "11": ["punizione_divina_migliorata"],
+    "13": ["caratteristica_del_giuramento"],
+    "14": ["purificazione_del_tocco"],
+    "15": ["caratteristica_del_giuramento"],
+    "17": ["caratteristica_del_giuramento"],
+    "18": ["aure_migliorate"],
+    "20": ["caratteristica_del_giuramento"]
+  }
+}

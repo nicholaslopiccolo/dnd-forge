@@ -1,0 +1,41 @@
+{
+  "nome": "Artefice",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "tiri_salvezza": ["COSTITUZIONE", "INTELLIGENZA"],
+
+  "skills_choices": {
+    "numero": 2,
+    "opzioni": [
+      "ARCANO", "STORIA", "INDAGARE",
+      "MEDICINA", "NATURA", "PERCEZIONE", "RAPIDITA_DI_MANO"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": { "INTELLIGENZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
+  },
+
+  "privilegi": {
+    "1": ["strumentazione_magica", "incantare"],
+    "2": ["infondere_oggetto"],
+    "3": ["specializzazione_artefice", "strumento_giusto"],
+    "5": ["lampo_di_genio"],
+    "6": ["capacita_specializzazione"],
+    "7": ["conoscenza_oggetti_magici"],
+    "9": ["capacita_specializzazione"],
+    "10": ["esperto_oggetti_magici"],
+    "11": ["anima_artefice"],
+    "13": ["capacita_specializzazione"],
+    "14": ["maestro_oggetti_magici"],
+    "15": ["capacita_specializzazione"],
+    "17": ["capacita_specializzazione"],
+    "20": ["anima_artefice_migliorata"]
+  }
+}

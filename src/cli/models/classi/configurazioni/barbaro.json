@@ -18,6 +18,14 @@
     ]
   },
 
+  "prerequisiti_multiclasse_and": { "FORZA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": ["ATLETICA", "INTIMIDIRE"]
+  },
+
   "privilegi": {
     "1": ["ira", "difesa_senza_armatura"],
     "2": ["attacco_spericolato", "senso_del_pericolo"],

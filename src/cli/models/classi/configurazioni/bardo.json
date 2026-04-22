@@ -1,0 +1,43 @@
+{
+  "nome": "Bardo",
+  "hp_dado": 8,
+
+  "competence_armi": ["ARMI_SEMPLICI", "BALESTRA_A_MANO", "SPADA_LUNGA", "STOCCO", "SPADA_CORTA"],
+  "competence_armature": ["ARMATURA_LEGGERA"],
+  "tiri_salvezza": ["DESTREZZA", "CARISMA"],
+
+  "skills_choices": {
+    "numero": 3,
+    "opzioni": [
+      "ACROBAZIA", "ADDESTRARE_ANIMALI", "ARCANO", "ATLETICA", "FURTIVITA",
+      "INDAGARE", "INGANNARE", "INTIMIDIRE", "INTUIZIONE", "INTRATTENERE",
+      "MEDICINA", "NATURA", "PERCEZIONE", "PERSUASIONE", "RAPIDITA_DI_MANO",
+      "RELIGIONE", "SOPRAVVIVENZA", "STORIA"
+    ]
+  },
+
+  "prerequisiti_multiclasse_and": { "CARISMA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 1,
+    "opzioni": [
+      "ACROBAZIA", "ADDESTRARE_ANIMALI", "ARCANO", "ATLETICA", "FURTIVITA",
+      "INDAGARE", "INGANNARE", "INTIMIDIRE", "INTUIZIONE", "INTRATTENERE",
+      "MEDICINA", "NATURA", "PERCEZIONE", "PERSUASIONE", "RAPIDITA_DI_MANO",
+      "RELIGIONE", "SOPRAVVIVENZA", "STORIA"
+    ]
+  },
+
+  "privilegi": {
+    "1": ["incantare", "ispirazione_bardica"],
+    "2": ["canto_di_riposo", "jolly_di_tutti_i_mestieri"],
+    "3": ["collegio_bardico", "perizia"],
+    "5": ["fonte_di_ispirazione"],
+    "6": ["capacita_del_collegio", "contromagia"],
+    "10": ["segreti_magici", "perizia_2"],
+    "14": ["capacita_del_collegio", "segreti_magici_2"],
+    "18": ["segreti_magici_3"],
+    "20": ["ispirazione_superiore"]
+  }
+}

@@ -25,9 +25,17 @@ class Classe:
     # Competenze base (alcune classi)
     competenze_base: set[AbilitaEnum] = field(default_factory=set)
 
-    # Abilità a scelta
+    # Abilità a scelta (creazione iniziale)
     skills_choices_num: int = 0
     skills_choices_opzioni: set[AbilitaEnum] = field(default_factory=set)
+
+    # Prerequisiti per il multiclasse (AND = tutti; OR = almeno uno)
+    prerequisiti_and: dict[AttributoEnum, int] = field(default_factory=dict)
+    prerequisiti_or: dict[AttributoEnum, int] = field(default_factory=dict)
+
+    # Abilità guadagnate al multiclasse
+    multiclass_skills_num: int = 0
+    multiclass_skills_opzioni: set[AbilitaEnum] = field(default_factory=set)
 
     @classmethod
     def from_config(cls, nome: ClassiEnum) -> 'Classe':
@@ -42,6 +50,24 @@ class Classe:
         """Returns True if a JSON configuration file exists for this class."""
         file_path = Path(__file__).parent / "configurazioni" / f"{nome.value.lower()}.json"
         return file_path.exists()
+
+    def verifica_prerequisiti(self, personaggio) -> tuple[bool, str]:
+        """Checks multiclassing prerequisites. Returns (soddisfatti, motivo_negazione)."""
+        for attr, minimo in self.prerequisiti_and.items():
+            valore = personaggio.attributi[attr].valore
+            if valore < minimo:
+                return False, f"{attr.value[:3].upper()} {valore} < {minimo}"
+
+        if self.prerequisiti_or:
+            if not any(
+                personaggio.attributi[attr].valore >= minimo
+                for attr, minimo in self.prerequisiti_or.items()
+            ):
+                nomi = "/".join(a.value[:3].upper() for a in self.prerequisiti_or)
+                minimo = next(iter(self.prerequisiti_or.values()))
+                return False, f"serve {nomi} ≥ {minimo}"
+
+        return True, ""
 
     def level_up(self, personaggio) -> None:
         """Applica un livello alla classe: incrementa livello, calcola HP, assegna competenze al Lv1."""
@@ -84,6 +110,10 @@ def carica_classe(file_path: str) -> 'Classe':
     with open(file_path, "r", encoding="utf-8") as f:
         dati = json.load(f)
 
+    mc_and_raw = dati.get("prerequisiti_multiclasse_and", {})
+    mc_or_raw = dati.get("prerequisiti_multiclasse_or", {})
+    mc_skills = dati.get("competenze_multiclasse", {})
+
     return Classe(
         nome=ClassiEnum(dati["nome"]),
         hp_dado=dati.get("hp_dado", 0),
@@ -93,5 +123,9 @@ def carica_classe(file_path: str) -> 'Classe':
         privilegi={int(lvl): feats for lvl, feats in dati.get("privilegi", {}).items()},
         competenze_base={AbilitaEnum[a] for a in dati.get("competenze_base", [])},
         skills_choices_num=dati.get("skills_choices", {}).get("numero", 0),
-        skills_choices_opzioni={AbilitaEnum[a] for a in dati.get("skills_choices", {}).get("opzioni", [])}
+        skills_choices_opzioni={AbilitaEnum[a] for a in dati.get("skills_choices", {}).get("opzioni", [])},
+        prerequisiti_and={AttributoEnum[k]: v for k, v in mc_and_raw.items()},
+        prerequisiti_or={AttributoEnum[k]: v for k, v in mc_or_raw.items()},
+        multiclass_skills_num=mc_skills.get("numero", 0),
+        multiclass_skills_opzioni={AbilitaEnum[a] for a in mc_skills.get("opzioni", [])},
     )

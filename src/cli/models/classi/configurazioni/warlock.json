@@ -9,14 +9,17 @@
   "skills_choices": {
     "numero": 2,
     "opzioni": [
-      "ARCANO",
-      "INDAGARE",
-      "INGANNARE",
-      "INTIMIDIRE",
-      "NATURA",
-      "RELIGIONE",
-      "STORIA"
+      "ARCANO", "INDAGARE", "INGANNARE",
+      "INTIMIDIRE", "NATURA", "RELIGIONE", "STORIA"
     ]
+  },
+
+  "prerequisiti_multiclasse_and": { "CARISMA": 13 },
+  "prerequisiti_multiclasse_or": {},
+
+  "competenze_multiclasse": {
+    "numero": 0,
+    "opzioni": []
   },
 
   "privilegi": {

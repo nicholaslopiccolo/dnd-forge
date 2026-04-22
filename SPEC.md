@@ -131,7 +131,7 @@ Classes are defined in `models/classi/configurazioni/*.json`:
 | 3 | ASI_LIVELLI, STANDARD_ARRAY not in constants | constants.py | Fixed in c1d9ed8 |
 | 4 | Module-level side effects on import | classi/classi.py | Fixed in c1d9ed8 |
 | 5 | Empty dead file | classi/guerriero.py | Open |
-| 6 | Personaggio.__new__() in serializer | serializer.py | Fixed in c1d9ed8 |
+| 6 | Personaggio.new() in serializer | serializer.py | Fixed in c1d9ed8 |
 | 7 | _mostra_lista_personaggi() never called | commands/pg.py | Open |
 | 8 | pg_show is a wrapper duplicate of pg_status | commands/pg.py | Open |
 | 9 | _attr_table declares 1 column, adds 4 cells/row | views/personaggio.py | Open |
