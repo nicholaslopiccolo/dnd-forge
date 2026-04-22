@@ -89,6 +89,7 @@ class Personaggio:
 
     @property
     def abilita(self) -> list[Abilita]:
+        """Lista di tutte le abilità del PG con competenza applicata."""
         return [
             Abilita(
                 abilita,

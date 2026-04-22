@@ -38,6 +38,7 @@ class Classe:
         return cls(nome=nome)
 
     def level_up(self, personaggio) -> None:
+        """Applica un livello alla classe: incrementa livello, calcola HP, assegna competenze al Lv1."""
         self.livello += 1
 
         # Calcola e aggiunge HP
