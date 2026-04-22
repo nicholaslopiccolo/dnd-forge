@@ -50,6 +50,7 @@ def list_all() -> list[Personaggio]:
 
 
 def delete(pg_id: int) -> None:
+    """Rimuove il file di salvataggio del PG dal disco. Silenzioso se non esiste."""
     path = _saves_dir() / f"{pg_id}.json"
     if path.exists():
         path.unlink()
