@@ -1,0 +1,215 @@
+{
+  "id": 8,
+  "nome": "filippo",
+  "classe_iniziale": "GUERRIERO",
+  "razza": "NANO",
+  "livello": 2,
+  "exp": 0,
+  "hp": 20,
+  "attributi": {
+    "FORZA": {
+      "valore": 15,
+      "ts": true
+    },
+    "DESTREZZA": {
+      "valore": 14,
+      "ts": false
+    },
+    "COSTITUZIONE": {
+      "valore": 13,
+      "ts": true
+    },
+    "INTELLIGENZA": {
+      "valore": 12,
+      "ts": false
+    },
+    "SAGGEZZA": {
+      "valore": 10,
+      "ts": false
+    },
+    "CARISMA": {
+      "valore": 8,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "PERCEZIONE",
+    "ADDESTRARE_ANIMALI",
+    "ACROBAZIA"
+  ],
+  "armi": [
+    "ARMI_SEMPLICI",
+    "ARMI_MARZIALI"
+  ],
+  "armature": [
+    "ARMATURA_PESANTE",
+    "ARMATURA_MEDIA",
+    "SCUDO",
+    "ARMATURA_LEGGERA"
+  ],
+  "tiri_salvezza": [],
+  "classi": {
+    "GUERRIERO": {
+      "livello": 1,
+      "hp_dado": 10,
+      "competence_armi": [
+        "ARMI_SEMPLICI",
+        "ARMI_MARZIALI"
+      ],
+      "competence_armature": [
+        "SCUDO",
+        "ARMATURA_LEGGERA",
+        "ARMATURA_MEDIA",
+        "ARMATURA_PESANTE"
+      ],
+      "tiri_salvezza": [
+        "COSTITUZIONE",
+        "FORZA"
+      ],
+      "privilegi": {
+        "1": [
+          "stile_di_combattimento",
+          "secondo_respiro"
+        ],
+        "2": [
+          "azione_scatto"
+        ],
+        "3": [
+          "archetipo_marziale"
+        ],
+        "5": [
+          "attacco_extra"
+        ],
+        "6": [
+          "asi_extra"
+        ],
+        "7": [
+          "capacita_archetipo"
+        ],
+        "9": [
+          "indomabile"
+        ],
+        "10": [
+          "capacita_archetipo"
+        ],
+        "11": [
+          "attacco_extra_2"
+        ],
+        "13": [
+          "indomabile_2"
+        ],
+        "14": [
+          "asi_extra"
+        ],
+        "15": [
+          "capacita_archetipo"
+        ],
+        "17": [
+          "azione_scatto_2",
+          "indomabile_3"
+        ],
+        "18": [
+          "capacita_archetipo"
+        ],
+        "20": [
+          "attacco_extra_3"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "ACROBAZIA",
+        "PERCEZIONE",
+        "INTUIZIONE",
+        "ADDESTRARE_ANIMALI",
+        "STORIA",
+        "SOPRAVVIVENZA",
+        "ATLETICA",
+        "INTIMIDIRE"
+      ],
+      "competenze_base": []
+    },
+    "LADRO": {
+      "livello": 1,
+      "hp_dado": 8,
+      "competence_armi": [
+        "ARMI_SEMPLICI",
+        "SPADA_CORTA",
+        "SPADA_LUNGA",
+        "STOCCO",
+        "BALESTRA_A_MANO"
+      ],
+      "competence_armature": [
+        "ARMATURA_LEGGERA"
+      ],
+      "tiri_salvezza": [
+        "INTELLIGENZA",
+        "DESTREZZA"
+      ],
+      "privilegi": {
+        "1": [
+          "perizia",
+          "attacco_furtivo",
+          "gergo_dei_ladri"
+        ],
+        "2": [
+          "azione_scaltra"
+        ],
+        "3": [
+          "archetipo_malizioso"
+        ],
+        "5": [
+          "schivata_prodigiosa"
+        ],
+        "6": [
+          "perizia_2"
+        ],
+        "7": [
+          "evasione"
+        ],
+        "9": [
+          "capacita_archetipo"
+        ],
+        "10": [
+          "asi_extra"
+        ],
+        "11": [
+          "talento_affidabile"
+        ],
+        "13": [
+          "capacita_archetipo"
+        ],
+        "14": [
+          "senso_cieco"
+        ],
+        "15": [
+          "mente_sfuggente"
+        ],
+        "17": [
+          "capacita_archetipo"
+        ],
+        "18": [
+          "imprendibile"
+        ],
+        "20": [
+          "colpo_di_grazia"
+        ]
+      },
+      "skills_choices_num": 4,
+      "skills_choices_opzioni": [
+        "ACROBAZIA",
+        "PERCEZIONE",
+        "INTUIZIONE",
+        "INDAGARE",
+        "PERSUASIONE",
+        "RAPIDITA_DI_MANO",
+        "ATLETICA",
+        "FURTIVITA",
+        "INTIMIDIRE",
+        "INGANNARE",
+        "INTRATTENERE"
+      ],
+      "competenze_base": []
+    }
+  },
+  "descrizione": ""
+}

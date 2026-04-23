@@ -4,6 +4,7 @@
 
   "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
   "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
+  "competence_armature_multiclasse": ["SCUDO"],
   "tiri_salvezza": ["FORZA", "COSTITUZIONE"],
 
   "skills_choices": {
@@ -23,7 +24,7 @@
 
   "competenze_multiclasse": {
     "numero": 1,
-    "opzioni": ["ATLETICA", "INTIMIDIRE"]
+    "opzioni": ["ATLETICA", "ADDESTRARE_ANIMALI", "INTIMIDIRE", "NATURA", "PERCEZIONE", "SOPRAVVIVENZA"]
   },
 
   "privilegi": {

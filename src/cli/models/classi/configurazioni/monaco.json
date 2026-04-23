@@ -16,7 +16,7 @@
 
   "competenze_multiclasse": {
     "numero": 1,
-    "opzioni": ["ACROBAZIA", "ATLETICA"]
+    "opzioni": ["ACROBAZIA", "ATLETICA", "STORIA", "INTUIZIONE", "RELIGIONE", "FURTIVITA"]
   },
 
   "privilegi": {

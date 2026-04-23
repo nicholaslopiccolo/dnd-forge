@@ -1,0 +1,269 @@
+{
+  "id": 7,
+  "nome": "matteo",
+  "classe_iniziale": "ARTEFICE",
+  "razza": "NANO",
+  "livello": 3,
+  "exp": 0,
+  "hp": 36,
+  "attributi": {
+    "FORZA": {
+      "valore": 10,
+      "ts": true
+    },
+    "DESTREZZA": {
+      "valore": 15,
+      "ts": false
+    },
+    "COSTITUZIONE": {
+      "valore": 14,
+      "ts": true
+    },
+    "INTELLIGENZA": {
+      "valore": 13,
+      "ts": true
+    },
+    "SAGGEZZA": {
+      "valore": 12,
+      "ts": false
+    },
+    "CARISMA": {
+      "valore": 8,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "MEDICINA",
+    "ADDESTRARE_ANIMALI",
+    "NATURA",
+    "ATLETICA"
+  ],
+  "armi": [
+    "ARMI_SEMPLICI",
+    "ARMI_MARZIALI"
+  ],
+  "armature": [
+    "ARMATURA_LEGGERA",
+    "ARMATURA_PESANTE",
+    "SCUDO",
+    "ARMATURA_MEDIA"
+  ],
+  "tiri_salvezza": [],
+  "classi": {
+    "ARTEFICE": {
+      "livello": 1,
+      "hp_dado": 8,
+      "competence_armi": [
+        "ARMI_SEMPLICI"
+      ],
+      "competence_armature": [
+        "ARMATURA_LEGGERA",
+        "SCUDO",
+        "ARMATURA_MEDIA"
+      ],
+      "tiri_salvezza": [
+        "INTELLIGENZA",
+        "COSTITUZIONE"
+      ],
+      "privilegi": {
+        "1": [
+          "strumentazione_magica",
+          "incantare"
+        ],
+        "2": [
+          "infondere_oggetto"
+        ],
+        "3": [
+          "specializzazione_artefice",
+          "strumento_giusto"
+        ],
+        "5": [
+          "lampo_di_genio"
+        ],
+        "6": [
+          "capacita_specializzazione"
+        ],
+        "7": [
+          "conoscenza_oggetti_magici"
+        ],
+        "9": [
+          "capacita_specializzazione"
+        ],
+        "10": [
+          "esperto_oggetti_magici"
+        ],
+        "11": [
+          "anima_artefice"
+        ],
+        "13": [
+          "capacita_specializzazione"
+        ],
+        "14": [
+          "maestro_oggetti_magici"
+        ],
+        "15": [
+          "capacita_specializzazione"
+        ],
+        "17": [
+          "capacita_specializzazione"
+        ],
+        "20": [
+          "anima_artefice_migliorata"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "INDAGARE",
+        "ARCANO",
+        "RAPIDITA_DI_MANO",
+        "MEDICINA",
+        "PERCEZIONE",
+        "STORIA",
+        "NATURA"
+      ],
+      "competenze_base": []
+    },
+    "BARBARO": {
+      "livello": 1,
+      "hp_dado": 12,
+      "competence_armi": [
+        "ARMI_SEMPLICI",
+        "ARMI_MARZIALI"
+      ],
+      "competence_armature": [
+        "ARMATURA_LEGGERA",
+        "SCUDO",
+        "ARMATURA_MEDIA"
+      ],
+      "tiri_salvezza": [
+        "FORZA",
+        "COSTITUZIONE"
+      ],
+      "privilegi": {
+        "1": [
+          "ira",
+          "difesa_senza_armatura"
+        ],
+        "2": [
+          "attacco_spericolato",
+          "senso_del_pericolo"
+        ],
+        "3": [
+          "sentiero_primordiale"
+        ],
+        "5": [
+          "attacco_extra",
+          "movimento_rapido"
+        ],
+        "7": [
+          "istinto_ferino"
+        ],
+        "9": [
+          "critico_brutale"
+        ],
+        "11": [
+          "ira_indomita"
+        ],
+        "15": [
+          "ira_persistente"
+        ],
+        "18": [
+          "forza_indomita"
+        ],
+        "20": [
+          "campione_primordiale"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "SOPRAVVIVENZA",
+        "ADDESTRARE_ANIMALI",
+        "PERCEZIONE",
+        "INTIMIDIRE",
+        "NATURA",
+        "ATLETICA"
+      ],
+      "competenze_base": []
+    },
+    "GUERRIERO": {
+      "livello": 1,
+      "hp_dado": 10,
+      "competence_armi": [
+        "ARMI_SEMPLICI",
+        "ARMI_MARZIALI"
+      ],
+      "competence_armature": [
+        "ARMATURA_LEGGERA",
+        "SCUDO",
+        "ARMATURA_MEDIA",
+        "ARMATURA_PESANTE"
+      ],
+      "tiri_salvezza": [
+        "FORZA",
+        "COSTITUZIONE"
+      ],
+      "privilegi": {
+        "1": [
+          "stile_di_combattimento",
+          "secondo_respiro"
+        ],
+        "2": [
+          "azione_scatto"
+        ],
+        "3": [
+          "archetipo_marziale"
+        ],
+        "5": [
+          "attacco_extra"
+        ],
+        "6": [
+          "asi_extra"
+        ],
+        "7": [
+          "capacita_archetipo"
+        ],
+        "9": [
+          "indomabile"
+        ],
+        "10": [
+          "capacita_archetipo"
+        ],
+        "11": [
+          "attacco_extra_2"
+        ],
+        "13": [
+          "indomabile_2"
+        ],
+        "14": [
+          "asi_extra"
+        ],
+        "15": [
+          "capacita_archetipo"
+        ],
+        "17": [
+          "azione_scatto_2",
+          "indomabile_3"
+        ],
+        "18": [
+          "capacita_archetipo"
+        ],
+        "20": [
+          "attacco_extra_3"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "ACROBAZIA",
+        "STORIA",
+        "SOPRAVVIVENZA",
+        "ADDESTRARE_ANIMALI",
+        "PERCEZIONE",
+        "INTUIZIONE",
+        "INTIMIDIRE",
+        "ATLETICA"
+      ],
+      "competenze_base": []
+    }
+  },
+  "descrizione": ""
+}

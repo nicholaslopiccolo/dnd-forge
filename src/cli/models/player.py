@@ -121,7 +121,7 @@ class Personaggio:
             count += 1
         return count
 
-    def level_up(self, classe: ClassiEnum | None = None) -> None:
+    def level_up(self, classe: ClassiEnum | None = None, is_multiclasse: bool = False) -> None:
         self.livello += 1
         # NOTE: EXP is reset per level (non-cumulative). Each level requires EXP_LIVELLI[level] earned
         # from scratch — intentionally different from the standard D&D cumulative system.
@@ -134,9 +134,9 @@ class Personaggio:
                 raise ValueError("Specifica la classe per il level up")
 
         if classe not in self.classi:
-            self.classi[classe] = Classe(nome=classe)
+            self.classi[classe] = Classe.from_config(classe)
 
-        self.classi[classe].level_up(self)
+        self.classi[classe].level_up(self, is_multiclasse=is_multiclasse)
 
     def aggiungi_feature(self, feature: str) -> None:
         # TODO: implementare il sistema di privilegi/feature

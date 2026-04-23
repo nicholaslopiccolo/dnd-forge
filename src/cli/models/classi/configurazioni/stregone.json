@@ -3,6 +3,7 @@
   "hp_dado": 6,
 
   "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armi_multiclasse": [],
   "competence_armature": [],
   "tiri_salvezza": ["COSTITUZIONE", "CARISMA"],
 

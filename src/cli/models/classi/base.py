@@ -1,5 +1,5 @@
 from dataclasses import dataclass, field
-from ..constants import ClassiEnum, AttributoEnum, AbilitaEnum
+from ..constants import ClassiEnum, AttributoEnum, AbilitaEnum, ASI_LIVELLI_DEFAULT
 
 import json
 from pathlib import Path
@@ -14,6 +14,7 @@ class Classe:
 
     # Armi e armature
     competence_armi: set[str] = field(default_factory=set)
+    competence_armi_multiclasse: set[str] = field(default_factory=set)
     competence_armature: set[str] = field(default_factory=set)
 
     # Tiri salvezza
@@ -28,6 +29,12 @@ class Classe:
     # Abilità a scelta (creazione iniziale)
     skills_choices_num: int = 0
     skills_choices_opzioni: set[AbilitaEnum] = field(default_factory=set)
+
+    # Armature ottenute solo al multiclasse (sottoinsieme di competence_armature)
+    competence_armature_multiclasse: set[str] = field(default_factory=set)
+
+    # Livelli di classe a cui scatta l'ASI (per-class, non per total level)
+    asi_livelli: frozenset[int] = field(default_factory=frozenset)
 
     # Prerequisiti per il multiclasse (AND = tutti; OR = almeno uno)
     prerequisiti_and: dict[AttributoEnum, int] = field(default_factory=dict)
@@ -69,7 +76,7 @@ class Classe:
 
         return True, ""
 
-    def level_up(self, personaggio) -> None:
+    def level_up(self, personaggio, is_multiclasse: bool = False) -> None:
         """Applica un livello alla classe: incrementa livello, calcola HP, assegna competenze al Lv1."""
         self.livello += 1
 
@@ -87,15 +94,22 @@ class Classe:
 
         # Al primo livello: assegna competenze, armi, armature e tiri salvezza
         if self.livello == 1:
-            personaggio.competenze.update(self.competenze_base)
-            personaggio.armi.update(self.competence_armi)
-            personaggio.armature.update(self.competence_armature)
+            # competenze_base: solo alla classe di partenza (SRD p.163: non concesse al multiclasse)
+            if not is_multiclasse:
+                personaggio.competenze.update(self.competenze_base)
+            # Al multiclasse si ottiene solo il sottoinsieme SRD-consentito (Table 6-1)
+            armi = self.competence_armi_multiclasse if is_multiclasse else self.competence_armi
+            personaggio.armi.update(armi)
+            armature = self.competence_armature_multiclasse if is_multiclasse else self.competence_armature
+            personaggio.armature.update(armature)
 
-            for attr_enum in self.tiri_salvezza:
-                if attr_enum in personaggio.attributi:
-                    personaggio.attributi[attr_enum].ts = True
+            # Tiri salvezza e skill metadata: solo alla classe di partenza, mai al multiclasse (SRD p.163)
+            if not is_multiclasse:
+                for attr_enum in self.tiri_salvezza:
+                    if attr_enum in personaggio.attributi:
+                        personaggio.attributi[attr_enum].ts = True
 
-            if self.skills_choices_num > 0:
+            if not is_multiclasse and self.skills_choices_num > 0:
                 personaggio.scelta_abilita = {
                     "numero": self.skills_choices_num,
                     "opzioni": self.skills_choices_opzioni
@@ -114,11 +128,18 @@ def carica_classe(file_path: str) -> 'Classe':
     mc_or_raw = dati.get("prerequisiti_multiclasse_or", {})
     mc_skills = dati.get("competenze_multiclasse", {})
 
+    armi_base = set(dati.get("competence_armi", []))
+    armi_mc = set(dati.get("competence_armi_multiclasse", armi_base))
+    armature_base = set(dati.get("competence_armature", []))
+    armature_mc = set(dati.get("competence_armature_multiclasse", armature_base))
+
     return Classe(
         nome=ClassiEnum(dati["nome"]),
         hp_dado=dati.get("hp_dado", 0),
-        competence_armi=set(dati.get("competence_armi", [])),
-        competence_armature=set(dati.get("competence_armature", [])),
+        competence_armi=armi_base,
+        competence_armi_multiclasse=armi_mc,
+        competence_armature=armature_base,
+        competence_armature_multiclasse=armature_mc,
         tiri_salvezza={AttributoEnum[t] for t in dati.get("tiri_salvezza", [])},
         privilegi={int(lvl): feats for lvl, feats in dati.get("privilegi", {}).items()},
         competenze_base={AbilitaEnum[a] for a in dati.get("competenze_base", [])},
@@ -128,4 +149,5 @@ def carica_classe(file_path: str) -> 'Classe':
         prerequisiti_or={AttributoEnum[k]: v for k, v in mc_or_raw.items()},
         multiclass_skills_num=mc_skills.get("numero", 0),
         multiclass_skills_opzioni={AbilitaEnum[a] for a in mc_skills.get("opzioni", [])},
+        asi_livelli=frozenset(dati.get("asi_livelli", ASI_LIVELLI_DEFAULT)),
     )

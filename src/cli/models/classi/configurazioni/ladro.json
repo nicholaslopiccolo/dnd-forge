@@ -3,6 +3,7 @@
   "hp_dado": 8,
 
   "competence_armi": ["ARMI_SEMPLICI", "BALESTRA_A_MANO", "SPADA_LUNGA", "STOCCO", "SPADA_CORTA"],
+  "competence_armi_multiclasse": [],
   "competence_armature": ["ARMATURA_LEGGERA"],
   "tiri_salvezza": ["DESTREZZA", "INTELLIGENZA"],
 
@@ -13,6 +14,8 @@
       "INDAGARE", "PERCEZIONE", "INTRATTENERE", "PERSUASIONE", "RAPIDITA_DI_MANO", "FURTIVITA"
     ]
   },
+
+  "asi_livelli": [4, 8, 10, 12, 16, 19],
 
   "prerequisiti_multiclasse_and": { "DESTREZZA": 13 },
   "prerequisiti_multiclasse_or": {},

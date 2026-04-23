@@ -86,8 +86,8 @@ class RazzaEnum(Enum):
     MEZZELFO = "Mezzelfo"
 
 
-# Livelli a cui scatta l'Ability Score Improvement
-ASI_LIVELLI: frozenset[int] = frozenset({4, 8, 12, 16, 19})
+# Livelli di classe standard a cui scatta l'ASI (usato come default; Fighter e Rogue hanno schedule diversi)
+ASI_LIVELLI_DEFAULT: frozenset[int] = frozenset({4, 8, 12, 16, 19})
 
 # Valori dello Standard Array per l'assegnazione degli attributi
 STANDARD_ARRAY: tuple[int, ...] = (15, 14, 13, 12, 10, 8)

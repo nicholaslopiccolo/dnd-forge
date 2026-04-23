@@ -83,15 +83,23 @@ It is the authoritative rules gate: **before any new feature ships, validate it 
 
 ## 5. Ability Score Improvements (ASI)
 
-**Standard ASI levels:** 4, 8, 12, 16, 19
+ASI scatta al **livello della singola classe**, non al livello totale del personaggio. Ogni classe ha il proprio schedule:
+
+| Classe | Livelli ASI di classe |
+|--------|-----------------------|
+| Tutte tranne Guerriero e Ladro | 4, 8, 12, 16, 19 |
+| Guerriero | **4, 6, 8, 12, 14, 16, 19** |
+| Ladro | **4, 8, 10, 12, 16, 19** |
 
 **Options (choose one):**
-- +2 to one ability score (capped at 20)
-- +1 to two different ability scores (each capped at 20)
+- +2 a un singolo attributo (cap 20)
+- +1 a due attributi diversi (cap 20 ciascuno)
 
-*Feats are not implemented.*
+*Feats non implementati.*
 
-**Implemented in:** `src/cli/models/constants.py:90`, `src/cli/commands/pg.py:224–257`
+Il check corretto è `pg.classi[classe].livello in pg.classi[classe].asi_livelli` — usa il livello della classe appena avanzata, non `pg.livello` totale.
+
+**Implemented in:** `src/cli/models/constants.py` (`ASI_LIVELLI_DEFAULT`), `src/cli/models/classi/base.py` (campo `asi_livelli`), `src/cli/commands/pg.py:385`, `guerriero.json`, `ladro.json`
 
 ---
 
@@ -102,7 +110,7 @@ It is the authoritative rules gate: **before any new feature ships, validate it 
 | 1 | `hp_dado + CON modifier` (full max) |
 | 2+ | `(hp_dado // 2 + 1) + CON modifier` (fixed average) |
 
-Minimum HP gain per level is not enforced by a floor guard — **future feature**.
+**Minimum HP gain per level: 1** — `max(1, hp_gain)` is enforced. A character always gains at least 1 HP per level regardless of CON modifier.
 
 **Implemented in:** `src/cli/models/classi/base.py:46–56`
 
@@ -191,9 +199,117 @@ Minimum HP gain per level is not enforced by a floor guard — **future feature*
 - **Total character level** = sum of all class levels.
 - HP from each class is accumulated using that class's `hp_dado`.
 - Proficiency bonus is always calculated from total character level, not a single class level.
-- Multiclass prerequisites (minimum ability scores per class) are **not enforced**.
 
-**Implemented in:** `src/cli/models/player.py:51–53`, `src/cli/commands/pg.py:260–302`
+**Cosa NON si ottiene al multiclasse (SRD PHB p.163):**
+- Tiri salvezza della nuova classe — **mai**, per nessuna classe
+- Competenze base automatiche (`competenze_base`) — sostituite dal meccanismo `multiclass_skills_*`
+- Skill metadata di creazione (`skills_choices`) — inutilizzate al multiclasse
+
+**Implemented in:** `src/cli/models/classi/base.py:99–109` (flag `is_multiclasse`)
+
+### 8.1 Prerequisites (Prerequisiti Multiclasse) — ENFORCED
+
+Minimum ability score requirements to enter a class via multiclassing (SRD Table 6-1). All values confirmed against SRD:
+
+| Classe | Tipo | Prerequisito |
+|--------|------|-------------|
+| Artefice | AND | INT ≥ 13 |
+| Barbaro | AND | FOR ≥ 13 |
+| Bardo | AND | CAR ≥ 13 |
+| Chierico | AND | SAG ≥ 13 |
+| Druido | AND | SAG ≥ 13 |
+| Guerriero | OR | FOR ≥ 13 **oppure** DES ≥ 13 |
+| Ladro | AND | DES ≥ 13 |
+| Mago | AND | INT ≥ 13 |
+| Monaco | AND | DES ≥ 13 **e** SAG ≥ 13 |
+| Paladino | AND | FOR ≥ 13 **e** CAR ≥ 13 |
+| Ranger | AND | DES ≥ 13 **e** SAG ≥ 13 |
+| Stregone | AND | CAR ≥ 13 |
+| Warlock | AND | CAR ≥ 13 |
+
+- AND prerequisites: tutti devono essere soddisfatti contemporaneamente.
+- OR prerequisites: almeno uno deve essere soddisfatto (Guerriero è l'unico caso attuale).
+- La scelta di classe è disabilitata nella UI se i prerequisiti non sono soddisfatti.
+
+**Implemented in:** `src/cli/models/classi/base.py:54–70`, JSON `prerequisiti_multiclasse_and` / `prerequisiti_multiclasse_or`
+
+### 8.2 Skill Proficiencies Gained at Multiclass (SRD Table 6-1)
+
+When a character enters a new class for the first time via multiclassing, they gain these skill proficiencies (cannot duplicate already-held proficiencies):
+
+| Classe | N. | Opzioni |
+|--------|-----|---------|
+| Artefice | 0 | — |
+| Barbaro | 1 | Atletica, Addestrare Animali, Intimidire, Natura, Percezione, Sopravvivenza |
+| Bardo | 1 | Qualsiasi abilità (tutte e 18) |
+| Chierico | 0 | — |
+| Druido | 0 | — |
+| Guerriero | 1 | Acrobazia, Addestrare Animali, Atletica, Storia, Intuizione, Intimidire, Percezione, Sopravvivenza |
+| Ladro | 1 | Acrobazia, Atletica, Ingannare, Intuizione, Intimidire, Indagare, Percezione, Intrattenere, Persuasione, Rapidità di Mano, Furtività |
+| Mago | 0 | — |
+| Monaco | 1 | Acrobazia, Atletica, Storia, Intuizione, Religione, Furtività |
+| Paladino | 0 | — |
+| Ranger | 1 | Addestrare Animali, Atletica, Intuizione, Indagare, Natura, Percezione, Furtività, Sopravvivenza |
+| Stregone | 0 | — |
+| Warlock | 1 | Arcano, Ingannare, Storia, Intimidire, Indagare, Natura, Religione |
+
+**Armi al multiclasse — regola critica (SRD Table 6-1):**
+
+8 classi non concedono alcuna arma al multiclasse (solo alla classe di partenza):
+
+| Classe | Armi inizio classe | Armi via multiclasse |
+|--------|-------------------|---------------------|
+| Artefice | ARMI_SEMPLICI | **nessuna** |
+| Bardo | ARMI_SEMPLICI + 4 specifiche | **nessuna** |
+| Chierico | ARMI_SEMPLICI | **nessuna** |
+| Druido | ARMI_SEMPLICI | **nessuna** |
+| Ladro | ARMI_SEMPLICI + 4 specifiche | **nessuna** |
+| Mago | ARMI_SEMPLICI | **nessuna** |
+| Stregone | ARMI_SEMPLICI | **nessuna** |
+| Warlock | ARMI_SEMPLICI | **nessuna** |
+| Barbaro, Guerriero, Monaco, Paladino, Ranger | stessa lista | stessa lista ✓ |
+
+**Armature al multiclasse — regola critica (SRD Table 6-1):**
+
+Tre classi concedono meno armature al multiclasse rispetto alla classe di partenza:
+
+| Classe | Armature inizio classe | Armature via multiclasse |
+|--------|------------------------|--------------------------|
+| Barbaro | Leggera, Media, Scudo | **Scudo soltanto** |
+| Guerriero | Leggera, Media, Pesante, Scudo | Leggera, Media, Scudo (**no Pesante**) |
+| Paladino | Leggera, Media, Pesante, Scudo | Leggera, Media, Scudo (**no Pesante**) |
+| Tutte le altre | stessa lista | stessa lista ✓ |
+
+Implementato via campi JSON `competence_armi_multiclasse` / `competence_armature_multiclasse` e flag `is_multiclasse` propagato `pg.py → player.py → base.py`.
+
+**Implemented in:** `src/cli/commands/pg.py:376–383`, JSON `competenze_multiclasse`
+
+### 8.3 Serializzazione dei campi di configurazione
+
+I campi di configurazione pura vengono **sempre ricaricati dal JSON della classe** tramite `Classe.from_config()` al load — non dal save file. Lo stato mutabile (`livello`, competenze acquisite) proviene dal save.
+
+**Campi config-only (non scritti nel save, ricaricati da JSON):**
+- `hp_dado` — evita save corrotti con `hp_dado: 0`
+- `asi_livelli`
+- `competence_armi_multiclasse`
+- `competence_armature_multiclasse`
+- `prerequisiti_and` / `prerequisiti_or`
+- `multiclass_skills_num` / `multiclass_skills_opzioni`
+
+Questo garantisce backward-compatibility con save precedenti e mantiene i valori sincronizzati con le config aggiornate.
+
+**Nota save corrotti pre-fix:** `saves/6.json` (GUERRIERO `hp_dado: 0`) e `saves/7.json` (FORZA `ts: true` e `ARMATURA_PESANTE` errati) contengono dati pre-fix. I campi config-only vengono corretti automaticamente al load; lo stato mutabile corrotto (TS e armature errati in 7.json) persiste — si raccomanda di ricreare quei personaggi.
+
+**Implemented in:** `src/cli/storage/serializer.py:from_dict()`
+
+### 8.4 ASI per classe (fixed)
+
+L'ASI si basa sul **livello della singola classe** (`pg.classi[classe].livello`), non sul livello totale. Ogni classe ha il proprio schedule in `asi_livelli` (frozenset):
+- Default (tutte le classi tranne Guerriero e Ladro): `{4, 8, 12, 16, 19}`
+- Guerriero: `{4, 6, 8, 12, 14, 16, 19}`
+- Ladro: `{4, 8, 10, 12, 16, 19}`
+
+**Implemented in:** `src/cli/commands/pg.py:385`, `src/cli/models/constants.py:90`
 
 ---
 
@@ -240,6 +356,10 @@ Ten races available: Umano, Elfo, Nano, Halfling, Gnomo, Mezzorco, Tiefling, Dra
 | Ability modifier | `(score - 10) // 2` | SRD |
 | HP at level 1 | `hp_dado + CON mod` | SRD |
 | HP at level 2+ | `(hp_dado // 2 + 1) + CON mod` | SRD average roll |
+| HP minimum per level | 1 | SRD |
+| Multiclass prereq — Barbaro | FOR ≥ 13 | SRD Table 6-1 |
+| Multiclass prereq — Mago | INT ≥ 13 | SRD Table 6-1 |
+| Multiclass prereq — Warlock | CAR ≥ 13 | SRD Table 6-1 |
 
 ---
 

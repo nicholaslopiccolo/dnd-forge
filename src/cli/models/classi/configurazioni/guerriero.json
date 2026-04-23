@@ -4,6 +4,7 @@
 
   "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
   "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "ARMATURA_PESANTE", "SCUDO"],
+  "competence_armature_multiclasse": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
   "tiri_salvezza": ["FORZA", "COSTITUZIONE"],
 
   "skills_choices": {
@@ -13,6 +14,8 @@
       "STORIA", "INTUIZIONE", "INTIMIDIRE", "PERCEZIONE", "SOPRAVVIVENZA"
     ]
   },
+
+  "asi_livelli": [4, 6, 8, 12, 14, 16, 19],
 
   "prerequisiti_multiclasse_and": {},
   "prerequisiti_multiclasse_or": { "FORZA": 13, "DESTREZZA": 13 },

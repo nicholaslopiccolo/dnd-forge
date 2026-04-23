@@ -61,10 +61,13 @@ def from_dict(d: dict) -> Personaggio:
     classi = {}
     for nome_str, cd in d["classi"].items():
         nome_enum = ClassiEnum[nome_str]
+        # Config-only fields are always reloaded from the class JSON definition.
+        # This keeps saves lean and ensures values stay in sync with the config source of truth.
+        config = Classe.from_config(nome_enum)
         classi[nome_enum] = Classe(
             nome=nome_enum,
             livello=cd["livello"],
-            hp_dado=cd["hp_dado"],
+            hp_dado=config.hp_dado,  # config-only: never changes, fixes stale saves with hp_dado=0
             competence_armi=set(cd["competence_armi"]),
             competence_armature=set(cd["competence_armature"]),
             tiri_salvezza={AttributoEnum[t] for t in cd["tiri_salvezza"]},
@@ -72,6 +75,13 @@ def from_dict(d: dict) -> Personaggio:
             skills_choices_num=cd["skills_choices_num"],
             skills_choices_opzioni={AbilitaEnum[a] for a in cd["skills_choices_opzioni"]},
             competenze_base={AbilitaEnum[a] for a in cd["competenze_base"]},
+            competence_armi_multiclasse=config.competence_armi_multiclasse,
+            competence_armature_multiclasse=config.competence_armature_multiclasse,
+            prerequisiti_and=config.prerequisiti_and,
+            prerequisiti_or=config.prerequisiti_or,
+            multiclass_skills_num=config.multiclass_skills_num,
+            multiclass_skills_opzioni=config.multiclass_skills_opzioni,
+            asi_livelli=config.asi_livelli,
         )
 
     return Personaggio.from_saved(

@@ -1,0 +1,135 @@
+{
+  "id": 6,
+  "nome": "filippo",
+  "classe_iniziale": "MONACO",
+  "razza": "NANO",
+  "livello": 2,
+  "exp": 0,
+  "hp": 12,
+  "attributi": {
+    "FORZA": {
+      "valore": 12,
+      "ts": true
+    },
+    "DESTREZZA": {
+      "valore": 15,
+      "ts": true
+    },
+    "COSTITUZIONE": {
+      "valore": 14,
+      "ts": false
+    },
+    "INTELLIGENZA": {
+      "valore": 13,
+      "ts": false
+    },
+    "SAGGEZZA": {
+      "valore": 10,
+      "ts": false
+    },
+    "CARISMA": {
+      "valore": 8,
+      "ts": false
+    }
+  },
+  "competenze": [
+    "ACROBAZIA",
+    "ATLETICA"
+  ],
+  "armi": [
+    "SPADA_CORTA",
+    "ARMI_SEMPLICI"
+  ],
+  "armature": [],
+  "tiri_salvezza": [],
+  "classi": {
+    "MONACO": {
+      "livello": 1,
+      "hp_dado": 8,
+      "competence_armi": [
+        "SPADA_CORTA",
+        "ARMI_SEMPLICI"
+      ],
+      "competence_armature": [],
+      "tiri_salvezza": [
+        "DESTREZZA",
+        "FORZA"
+      ],
+      "privilegi": {
+        "1": [
+          "arti_marziali",
+          "ki"
+        ],
+        "2": [
+          "movimento_senza_armatura",
+          "caduta_rallentata"
+        ],
+        "3": [
+          "tradizione_monastica",
+          "deflessione_proiettili"
+        ],
+        "5": [
+          "attacco_extra",
+          "stordire_i_colpi"
+        ],
+        "6": [
+          "capacita_tradizione",
+          "colpi_magici"
+        ],
+        "7": [
+          "evasione",
+          "quiete_della_mente"
+        ],
+        "9": [
+          "movimento_senza_armatura_2"
+        ],
+        "10": [
+          "purezza_del_corpo"
+        ],
+        "11": [
+          "capacita_tradizione"
+        ],
+        "13": [
+          "lingua_del_sole_e_della_luna"
+        ],
+        "14": [
+          "anima_diamante"
+        ],
+        "15": [
+          "corpo_senza_tempo"
+        ],
+        "17": [
+          "capacita_tradizione"
+        ],
+        "18": [
+          "corpo_vuoto"
+        ],
+        "20": [
+          "perfezione_del_se"
+        ]
+      },
+      "skills_choices_num": 2,
+      "skills_choices_opzioni": [
+        "RELIGIONE",
+        "INTUIZIONE",
+        "STORIA",
+        "FURTIVITA",
+        "ACROBAZIA",
+        "ATLETICA"
+      ],
+      "competenze_base": []
+    },
+    "GUERRIERO": {
+      "livello": 1,
+      "hp_dado": 0,
+      "competence_armi": [],
+      "competence_armature": [],
+      "tiri_salvezza": [],
+      "privilegi": {},
+      "skills_choices_num": 0,
+      "skills_choices_opzioni": [],
+      "competenze_base": []
+    }
+  },
+  "descrizione": ""
+}

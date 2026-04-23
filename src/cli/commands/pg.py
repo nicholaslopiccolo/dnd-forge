@@ -1,6 +1,6 @@
 from commands import command, console
 from InquirerPy import inquirer
-from models.constants import ClassiEnum, RazzaEnum, AttributoEnum, AbilitaEnum, ASI_LIVELLI, STANDARD_ARRAY
+from models.constants import ClassiEnum, RazzaEnum, AttributoEnum, AbilitaEnum, STANDARD_ARRAY
 from models.player import Personaggio, Attributo
 from models.classi.base import Classe
 from rich.panel import Panel
@@ -124,7 +124,7 @@ async def _attributi_standard() -> dict[AttributoEnum, Attributo]:
 
     for attr in AttributoEnum:
         scelta = await inquirer.select(
-            message=f"Valore per [cyan]{attr.value.upper()}[/cyan] (disponibili: {disponibili}):",
+            message=f"Valore per {attr.value.upper()} (disponibili: {disponibili}):",
             choices=[{"name": str(v), "value": v} for v in disponibili],
         ).execute_async()
         attributi[attr] = Attributo(nome=attr.value, valore=scelta)
@@ -358,15 +358,31 @@ async def _esegui_levelup(pg: Personaggio) -> None:
         ).execute_async()
 
         if nuova is not None:
-            classe = nuova
+            cls_check = Classe.from_config(nuova)
+            ok, motivo = cls_check.verifica_prerequisiti(pg)
+            if not ok:
+                console.print(f"[red]Prerequisiti non soddisfatti: {motivo}[/red]")
+            else:
+                classe = nuova
+
+    e_nuova_classe = classe not in pg.classi
 
     hp_prima = pg.hp
-    pg.level_up(classe)
+    pg.level_up(classe, is_multiclasse=e_nuova_classe)
     hp_guadagnati = pg.hp - hp_prima
     if hp_guadagnati > 0:
         console.print(f"[dim]❤️  HP +{hp_guadagnati}[/dim]")
 
-    if pg.livello in ASI_LIVELLI:
+    if e_nuova_classe:
+        cls_obj = pg.classi[classe]
+        if cls_obj.multiclass_skills_num > 0:
+            opzioni = (cls_obj.multiclass_skills_opzioni or set(AbilitaEnum)) - pg.competenze
+            if opzioni and len(opzioni) >= cls_obj.multiclass_skills_num:
+                console.print(f"[dim]Scegli le competenze ottenute dalla nuova classe.[/dim]")
+                nuove = await _chiedi_competenze(cls_obj.multiclass_skills_num, opzioni)
+                pg.competenze.update(nuove)
+
+    if pg.classi[classe].livello in pg.classi[classe].asi_livelli:
         await _chiedi_asi(pg)
 
 

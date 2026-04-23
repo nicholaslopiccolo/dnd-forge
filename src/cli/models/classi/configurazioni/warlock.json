@@ -3,6 +3,7 @@
   "hp_dado": 8,
 
   "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armi_multiclasse": [],
   "competence_armature": ["ARMATURA_LEGGERA"],
   "tiri_salvezza": ["SAGGEZZA", "CARISMA"],
 
@@ -18,8 +19,8 @@
   "prerequisiti_multiclasse_or": {},
 
   "competenze_multiclasse": {
-    "numero": 0,
-    "opzioni": []
+    "numero": 1,
+    "opzioni": ["ARCANO", "INGANNARE", "STORIA", "INTIMIDIRE", "INDAGARE", "NATURA", "RELIGIONE"]
   },
 
   "privilegi": {

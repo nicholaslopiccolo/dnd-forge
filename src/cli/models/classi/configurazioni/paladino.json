@@ -4,6 +4,7 @@
 
   "competence_armi": ["ARMI_SEMPLICI", "ARMI_MARZIALI"],
   "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "ARMATURA_PESANTE", "SCUDO"],
+  "competence_armature_multiclasse": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
   "tiri_salvezza": ["SAGGEZZA", "CARISMA"],
 
   "skills_choices": {

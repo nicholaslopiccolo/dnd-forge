@@ -3,6 +3,7 @@
   "hp_dado": 8,
 
   "competence_armi": ["ARMI_SEMPLICI"],
+  "competence_armi_multiclasse": [],
   "competence_armature": ["ARMATURA_LEGGERA", "ARMATURA_MEDIA", "SCUDO"],
   "tiri_salvezza": ["COSTITUZIONE", "INTELLIGENZA"],
 
